@@ -15,24 +15,4 @@
 <!-- JS Partials -->
 {{ partial "scripts.html" . }}
 
-<!-- SEO -->
-<meta name="keywords"
-      content="example, placeholder, website, seo, keywords">
-<script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Example Organization",
-        "url": "https://example.com",
-        "sameAs": [
-            "https://github.com/example",
-            "https://www.instagram.com/example"
-        ]
-    }
-</script>
-<meta property="og:title" content="Example Website – Placeholder Title"/>
-<meta property="og:description"
-      content="Placeholder Open Graph description for an example website."/>
-<meta property="og:type" content="website"/>
-<meta property="og:url" content="https://example.com"/>
-<meta property="og:image" content="https://example.com/social-preview.jpg"/>
+{{ partial "seo.html" . }}
