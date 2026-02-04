@@ -1,0 +1,25 @@
+.btn-primary {
+    @apply bg-amber-500/10 inline-flex items-center gap-4 font-mono text-xs tracking-widest uppercase text-primary duration-300 ease-out px-6 justify-center w-full py-3 rounded-lg font-medium hover:shadow-md transition-all;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+}
+
+.btn-primary:hover {
+    @apply bg-amber-500/40;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    transform: translateY(-1px);
+}
+
+.btn-secondary {
+    @apply relative inline-block text-primary pb-1 font-mono transition-colors;
+}
+
+.btn-secondary::after {
+    content: '';
+    @apply absolute left-0 bottom-0 w-full h-px bg-primary/20 transform scale-x-0 origin-left transition-transform duration-500;
+}
+
+.btn-secondary:hover::after {
+    @apply scale-x-100 bg-primary/80;
+}

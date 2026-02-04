@@ -1,0 +1,190 @@
+{
+  "drinks_de": [
+    {
+      "name": "Kaffee",
+      "price": "1,00 €",
+      "description": "Klassischer Filterkaffee"
+    },
+    {
+      "name": "Kaffee Crème",
+      "price": "1,00 €",
+      "description": "Kaffee mit Milchschaum"
+    },
+    {
+      "name": "Espresso",
+      "price": "1,00 €",
+      "description": "Starker, aromatischer Espresso"
+    },
+    {
+      "name": "Doppelter Espresso",
+      "price": "1,20 €",
+      "description": "Doppelte Menge Espresso"
+    },
+    {
+      "name": "Tee",
+      "price": "kostenlos",
+      "description": "Verschiedene Teesorten"
+    },
+    {
+      "name": "Kakao",
+      "price": "1,00 €",
+      "description": "Heiße Schokolade"
+    },
+    {
+      "name": "Milchkaffee",
+      "price": "1,50 €",
+      "description": "Kaffee mit viel Milch"
+    },
+    {
+      "name": "Cappuccino",
+      "price": "1,50 €",
+      "description": "Espresso mit Milchschaum"
+    },
+    {
+      "name": "Latte Macchiato",
+      "price": "1,50 €",
+      "description": "Geschichteter Milchkaffee"
+    },
+    {
+      "name": "Schokoccino",
+      "price": "1,50 €",
+      "description": "Schokoladiger Cappuccino"
+    },
+    {
+      "name": "Wasser 0,7l",
+      "price": "0,50 €",
+      "description": "Spritzig, medium oder still"
+    },
+    {
+      "name": "Hackerbrausen 0,33l",
+      "price": "1,50 € + 1€ Pfand",
+      "description": "Erfrischendes Getränk"
+    },
+    {
+      "name": "Hackerbrausen 0,5l",
+      "price": "1,50 € + 1€ Pfand",
+      "description": "Erfrischendes Getränk"
+    },
+    {
+      "name": "Fritz 0,5l",
+      "price": "2,00 € + 1€ Pfand",
+      "description": "Erfrischendes Getränk"
+    },
+    {
+      "name": "Winter Mate",
+      "price": "1,20 €",
+      "description": "Spezielles Wintergetränk"
+    }
+  ],
+  "drinks_en": [
+    {
+      "name": "Coffee",
+      "price": "€1.00",
+      "description": "Classic filter coffee"
+    },
+    {
+      "name": "Coffee Crème",
+      "price": "€1.00",
+      "description": "Coffee with milk foam"
+    },
+    {
+      "name": "Espresso",
+      "price": "€1.00",
+      "description": "Strong, aromatic espresso"
+    },
+    {
+      "name": "Double Espresso",
+      "price": "€1.20",
+      "description": "Double shot of espresso"
+    },
+    {
+      "name": "Tea",
+      "price": "Free",
+      "description": "Various tea varieties"
+    },
+    {
+      "name": "Hot Chocolate",
+      "price": "€1.00",
+      "description": "Hot chocolate"
+    },
+    {
+      "name": "Milchkaffee",
+      "price": "€1.50",
+      "description": "Coffee with lots of milk"
+    },
+    {
+      "name": "Cappuccino",
+      "price": "€1.50",
+      "description": "Espresso with milk foam"
+    },
+    {
+      "name": "Latte Macchiato",
+      "price": "€1.50",
+      "description": "Layered milk coffee"
+    },
+    {
+      "name": "Schokoccino",
+      "price": "€1.50",
+      "description": "Chocolate cappuccino"
+    },
+    {
+      "name": "Water 0.7l",
+      "price": "€0.50",
+      "description": "Sparkling, medium or still"
+    },
+    {
+      "name": "Hackerbrausen 0.33l",
+      "price": "€1.50 + €1 deposit",
+      "description": "Refreshing beverage"
+    },
+    {
+      "name": "Hackerbrausen 0.5l",
+      "price": "€1.50 + €1 deposit",
+      "description": "Refreshing beverage"
+    },
+    {
+      "name": "Fritz 0.5l",
+      "price": "€2.00 + €1 deposit",
+      "description": "Refreshing beverage"
+    },
+    {
+      "name": "Winter Mate",
+      "price": "€1.20",
+      "description": "Special winter drink"
+    }
+  ],
+  "snacks_de": [
+    {
+      "name": "Obst",
+      "price": "0,70 €",
+      "description": "Frisches Obst"
+    },
+    {
+      "name": "Müsli",
+      "price": "1ct/g",
+      "description": "Nach Gewicht berechnet"
+    },
+    {
+      "name": "Ascii Mitgliedschaft",
+      "price": "unbezahlbar",
+      "description": "Besondere Mitgliedschaft"
+    }
+  ],
+  "snacks_en": [
+    {
+      "name": "Fruit",
+      "price": "€0.70",
+      "description": "Fresh fruit"
+    },
+    {
+      "name": "Muesli",
+      "price": "1ct/g",
+      "description": "Charged by weight"
+    },
+    {
+      "name": "Ascii Membership",
+      "price": "priceless",
+      "description": "Special membership"
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+baseURL = "https://ascii-dresden.de/"
+languageCode = 'de'
+title = 'ascii Dresden'
+
+defaultContentLanguage = 'de'
+hasCJKLanguage = false
+defaultContentLanguageInSubdir = false
+enableRobotsTXT = true
+
+disableKinds = ["section", "taxonomy", "term"]
+
+[languages]
+[languages.de]
+languageName = "Deutsch"
+weight = 1
+
+[languages.en]
+languageName = "English"
+weight = 2
+
+[module]
+  [module.hugoVersion]
+    extended = false
+    min      = "0.112.0"
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+  [[module.mounts]]
+    source = "hugo_stats.json"
+    target = "assets/watching/hugo_stats.json"
+
+[build]
+  writeStats = true
+  [[build.cachebusters]]
+    source = "assets/watching/hugo_stats\\.json"
+    target = "main\\.css"
+  [[build.cachebusters]]
+    source = "(postcss|tailwind)\\.config\\.js"
+    target = "css"
+  [[build.cachebusters]]
+    source = "assets/.*\\.(js|ts|jsx|tsx)"
+    target = "js"
+  [[build.cachebusters]]
+    source = "assets/.*\\.(.*)$"
+    target = "$1"

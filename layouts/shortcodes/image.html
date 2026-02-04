@@ -1,0 +1,15 @@
+{{ $src := .Get "src" }}
+{{ $alt := .Get "alt" | default "" }}
+{{ $img := resources.Get $src }}
+
+{{ if not $img }}
+    {{ errorf "Bild '%s' nicht gefunden. Achte darauf, dass es in /assets/ liegt." $src }}
+{{ end }}
+
+{{ $resized := $img.Resize "1000x" }}
+
+<img
+        src="{{ $resized.RelPermalink }}"
+        alt="{{ $alt }}"
+        loading="lazy"
+        style="max-width: 100%; height: auto;">

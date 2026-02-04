@@ -1,0 +1,30 @@
+{{ $event := .event }}
+{{ $language := .language }}
+{{ $responsiveClass := .responsiveClass | default "" }}
+
+{{ $link := $event.RelPermalink }}
+
+<article class="bg-white rounded-lg overflow-hidden shadow-lg border border-primary/10 flex flex-col {{ $responsiveClass }}">
+    <a href="{{ $link }}" class="h-48 sm:h-52 md:h-60 overflow-hidden block">
+        <img alt="{{ $event.Title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="{{ $event.Params.image }}"/>
+    </a>
+    <div class="p-4 md:p-6 flex flex-col flex-1">
+        <div class="flex justify-between items-center gap-2 mb-3 flex-wrap">
+            <span class="px-2 py-1 {{ $event.Params.tagColor }} text-xs font-mono rounded">{{ $event.Params.tag }}</span>
+            <span class="text-xs text-gray-500 font-mono whitespace-nowrap">
+                {{ if eq $language "en" }}
+                    {{ time.Format "01/02/2006" $event.Params.date }}
+                {{ else }}
+                    {{ time.Format "02.01.2006" $event.Params.date }}
+                {{ end }}
+            </span>
+        </div>
+        <h3 class="font-display text-base md:text-lg mb-2 text-text-light line-clamp-2">
+            <a href="{{ $link }}" class="hover:text-primary transition-colors">{{ $event.Title }}</a>
+        </h3>
+        <p class="text-text-light/70 text-xs md:text-sm mb-4 flex-1 line-clamp-3">{{ $event.Params.description }}</p>
+        <a class="btn-secondary text-xs md:text-sm mt-3 md:mt-4 py-2" href="{{ $link }}">
+            {{ if eq $language "en" }}Read Details >{{ else }}Details lesen >{{ end }}
+        </a>
+    </div>
+</article>

@@ -1,0 +1,25 @@
+{{ define "main" }}
+    <div class="container">
+        <div class="pt-12 md:pt-16 lg:pt-24 flex flex-col md:flex-row justify-between items-start md:items-end">
+            <div class="mb-4 md:mb-0">
+                <h2 class="font-display text-2xl sm:text-3xl md:text-4xl mb-2">
+                    {{ if eq .Language.Lang "en" }}News & Events{{ else }}Neuigkeiten & Events{{ end }}
+                </h2>
+                <p class="font-mono text-xs sm:text-sm text-primary">
+                    {{ if eq .Language.Lang "en" }}Latest Updates & Events{{ else }}Letzte Updates & Veranstaltungen{{ end }}
+                </p>
+            </div>
+        </div>
+
+        <div class="py-8 md:py-12 lg:py-16 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr">
+            {{ $posts := where .Site.RegularPages "Section" "posts" }}
+
+            {{ range $posts }}
+                {{ partial "event-card" (dict
+                        "event" .
+                        "responsiveClass" ""
+                        ) }}
+            {{ end }}
+        </div>
+    </div>
+{{ end }}

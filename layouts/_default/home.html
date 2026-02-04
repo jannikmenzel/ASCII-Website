@@ -1,0 +1,105 @@
+{{ define "main" }}
+    {{ partial "hero.html" . }}
+
+    <section class="py-12 md:py-16 lg:py-24 bg-paper-light" id="menu">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="font-display text-2xl sm:text-3xl md:text-4xl text-text-light mb-2">
+                    {{ if eq .Language.Lang "en" }}Our Menu{{ else }}Unser Angebot{{ end }}
+                </h2>
+                <p class="font-mono text-xs sm:text-sm text-primary">
+                    {{ if eq .Language.Lang "en" }}Menu & Prices{{ else }}Menü & Preise{{ end }}
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-48">
+                <div class="mb-8 md:mb-0">
+                    <h3 class="font-mono text-base md:text-lg lg:text-xl text-primary mb-4 md:mb-6 pb-2 border-b border-primary/10 typewriter w-fit overflow-x-auto">
+                        class {{ if eq .Language.Lang "en" }}Drinks extends Beverage{{ else }}Getränke extends Drink{{ end }}
+                    </h3>
+                    <div class="space-y-4 md:space-y-6">
+                        {{ range first 3 (index .Site.Data.menu (printf "drinks_%s" .Language.Lang) | default .Site.Data.menu.drinks_de) }}
+                            <div>
+                                <div class="flex justify-between items-baseline mb-1 flex-wrap gap-1">
+                                    <h4 class="font-semibold text-sm md:text-base">{{ .name }}</h4>
+                                    <span class="font-mono text-primary text-sm md:text-base">{{ .price }}</span>
+                                </div>
+                                <p class="text-xs md:text-sm text-text-light/70 leading-relaxed">{{ .description }}</p>
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-mono text-base md:text-lg lg:text-xl text-primary mb-4 md:mb-6 pb-2 border-b border-primary/10 typewriter w-fit overflow-x-auto">
+                        class {{ if eq .Language.Lang "en" }}Snacks implements Fuel{{ else }}Snacks implements Fuel{{ end }}
+                    </h3>
+                    <div class="space-y-4 md:space-y-6">
+                        {{ range first 3 (index .Site.Data.menu (printf "snacks_%s" .Language.Lang) | default .Site.Data.menu.snacks_de) }}
+                            <div>
+                                <div class="flex justify-between items-baseline mb-1 flex-wrap gap-1">
+                                    <h4 class="font-semibold text-sm md:text-base">{{ .name }}</h4>
+                                    <span class="font-mono text-primary text-sm md:text-base">{{ .price }}</span>
+                                </div>
+                                <p class="text-xs md:text-sm text-text-light/70 leading-relaxed">{{ .description }}</p>
+                            </div>
+                        {{ end }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 md:mt-12 text-center">
+                <a class="btn-primary text-sm md:text-base px-4 py-2 md:px-6 md:py-3" href="{{ if eq .Language.Lang "en" }}/en/menu{{ else }}/menu{{ end }}">
+                    {{ if eq .Language.Lang "en" }}./ view_full_menu{{ else }}./ view_full_menu{{ end }}
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-12 md:py-16 lg:py-24 bg-background-light" id="events">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 md:mb-10">
+                <div class="mb-4 md:mb-0">
+                    <h2 class="font-display text-2xl sm:text-3xl md:text-4xl mb-2">
+                        {{ if eq .Language.Lang "en" }}News & Events{{ else }}Neuigkeiten & Events{{ end }}
+                    </h2>
+                    <p class="font-mono text-xs sm:text-sm text-primary">
+                        {{ if eq .Language.Lang "en" }}Latest Updates & Events{{ else }}Letzte Updates & Veranstaltungen{{ end }}
+                    </p>
+                </div>
+                <div class="mt-2 md:mt-0">
+                    <a class="font-mono flex items-center gap-1 md:gap-2 text-xs md:text-sm font-medium hover:text-primary"
+                       href="{{ if eq .Language.Lang "en" }}/en/news{{ else }}/news{{ end }}">
+                        {{ if eq .Language.Lang "en" }}More News{{ else }}Weitere Neuigkeiten{{ end }}
+                        <span class="material-icons text-xs md:text-sm">arrow_forward</span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 auto-rows-fr">
+                {{ $currentLang := .Language.Lang }}
+                {{ $posts := where .Site.RegularPages "Section" "posts" }}
+                {{ $sortedPosts := sort $posts "Params.date" "desc" }}
+
+                <!-- First 3 events always shown -->
+                {{ range first 3 $sortedPosts }}
+                    {{ partial "event-card" (dict
+                            "event" .
+                            "language" $currentLang
+                            "responsiveClass" ""
+                            ) }}
+                {{ end }}
+
+                <!-- 4th event: show on sm (2-col) but hide on lg (3-col) -->
+                {{ if ge (len $sortedPosts) 4 }}
+                    {{ $fourthEvent := index $sortedPosts 3 }}
+                    {{ partial "event-card" (dict
+                            "event" $fourthEvent
+                            "language" $currentLang
+                            "responsiveClass" "sm:block lg:hidden"
+                            ) }}
+                {{ end }}
+            </div>
+        </div>
+    </section>
+{{ end }}

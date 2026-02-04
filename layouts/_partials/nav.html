@@ -1,0 +1,113 @@
+<nav class="fixed w-full z-50 bg-background-light/80 backdrop-blur-md border-b border-primary/10">
+    <div class="mx-auto px-4 max-w-7xl">
+        <div class="flex items-center justify-between h-16 md:h-20">
+            <div class="flex items-center">
+                <a href="{{ if eq .Site.Language.Lang "en" }}/en{{ else }}/{{ end }}">
+                    {{ with resources.Get "icons/logo.svg" }}
+                        <img src="{{ .RelPermalink }}" alt="ASCII Café Logo" class="h-8 w-auto">
+                    {{ end }}
+                </a>
+            </div>
+
+            <div class="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2 space-x-8 font-mono text-xs tracking-widest">
+                {{ $currentPage := . }}
+                {{ $navItems := slice }}
+
+                {{ if eq .Site.Language.Lang "en" }}
+                    {{ $navItems = $navItems | append (dict "name" "Home" "url" "/en/") }}
+                    {{ $navItems = $navItems | append (dict "name" "About" "url" "/en/about") }}
+                    {{ $navItems = $navItems | append (dict "name" "Menu" "url" "/en/menu") }}
+                    {{ $navItems = $navItems | append (dict "name" "News" "url" "/en/news") }}
+                {{ else }}
+                    {{ $navItems = $navItems | append (dict "name" "Home" "url" "/") }}
+                    {{ $navItems = $navItems | append (dict "name" "Über uns" "url" "/about") }}
+                    {{ $navItems = $navItems | append (dict "name" "Menü" "url" "/menu") }}
+                    {{ $navItems = $navItems | append (dict "name" "News" "url" "/news") }}
+                {{ end }}
+
+                {{ range $navItems }}
+                    <a href="{{ .url }}"
+                       class="text-secondary hover:text-primary transition-colors duration-200
+                              {{ if eq $currentPage.RelPermalink .url }}text-primary{{ end }}">
+                        ~/{{ .name }}/
+                    </a>
+                {{ end }}
+            </div>
+
+            <div class="flex items-center">
+                <a class="hidden lg:inline-flex btn-primary text-sm"
+                   href="{{ if eq .Site.Language.Lang "en" }}/en/about{{ else }}/about{{ end }}">
+                    {{ if eq .Site.Language.Lang "en" }}Learn more{{ else }}Mehr erfahren{{ end }}
+                </a>
+
+                <button class="lg:hidden p-2 text-secondary hover:text-primary"
+                        id="mobile-menu-button"
+                        aria-label="{{ if eq .Site.Language.Lang "en" }}Open menu{{ else }}Menü öffnen{{ end }}">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="lg:hidden hidden bg-background-light border-t border-primary/10" id="mobile-menu">
+            <div class="py-4 space-y-4 font-mono text-sm tracking-widest">
+                {{ range $navItems }}
+                    <a href="{{ .url }}"
+                       class="block px-4 py-2 text-secondary hover:text-primary hover:bg-primary/5 transition-colors duration-200
+                              {{ if eq $currentPage.RelPermalink .url }}text-primary bg-primary/5{{ end }}">
+                        ~/{{ .name }}/
+                    </a>
+                {{ end }}
+
+                <div class="px-4 pt-4 border-t border-primary/10">
+                    <a class="block w-full text-center btn-primary text-sm py-3"
+                       href="{{ if eq .Site.Language.Lang "en" }}/en/about{{ else }}/about{{ end }}">
+                        {{ if eq .Site.Language.Lang "en" }}Learn more{{ else }}Mehr erfahren{{ end }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const menuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (menuButton && mobileMenu) {
+            menuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+
+                // Toggle icon
+                const icon = menuButton.querySelector('svg');
+                if (mobileMenu.classList.contains('hidden')) {
+                    // Menu is closed, show hamburger
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                } else {
+                    // Menu is open, show X
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+                }
+            });
+
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuButton.querySelector('svg');
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                }
+            });
+
+            // Close menu when clicking a link
+            mobileMenu.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenu.classList.add('hidden');
+                    const icon = menuButton.querySelector('svg');
+                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+                });
+            });
+        }
+    });
+</script>

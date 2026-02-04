@@ -1,0 +1,47 @@
+@import "components/buttons.css";
+@import "components/markdown.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box
+}
+
+html, body {
+    height: 100%;
+}
+
+main {
+    flex: 1;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    overflow-x: hidden;
+    @apply text-primary;
+}
+
+.container {
+    margin: 0 auto;
+    max-width: 1200px;
+    padding: 0 32px 0 32px;
+}
+
+@media (min-width: 1026px) {
+    .container-post {
+        max-width: 80%;
+        margin: 0 auto;
+    }
+}
+
+.no-style {
+    all: unset;
+    display: contents;
+}

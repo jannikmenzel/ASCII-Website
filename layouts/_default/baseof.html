@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="{{ site.Language.LanguageCode }}" dir="auto">
+<head>
+    {{ partial "head.html" . }}
+    <title>{{ block "title" . }}{{ .Title }} | {{ .Site.Title }}{{ end }}</title>
+</head>
+<body class="bg-background-light">
+<nav class="mb-12">
+    {{ partial "nav.html" . }}
+</nav>
+<main>
+    {{ block "main" . }}{{ end }}
+</main>
+{{ if ne .Kind "404" }}
+    <footer>
+        {{ partial "footer.html" . }}
+    </footer>
+{{ end }}
+</body>
+</html>

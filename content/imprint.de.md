@@ -1,0 +1,29 @@
+---
+title: Impressum
+draft: false
+---
+
+# Impressum
+
+**Adresse**
+
+- Studentencafé ASCII  
+- Andreas-Pfitzmann-Bau, Raum E016  
+- Nöthnitzer Strasse 46  
+- 01187 Dresden  
+
+**E-Mail-Adresse**
+
+- info@ascii-dresden.de  
+
+**Telefonnummer**
+
+- +49 351 46342221  
+
+**GitHub**
+
+- ascii-dresden  
+
+**Instagram**
+
+- @asciidresden

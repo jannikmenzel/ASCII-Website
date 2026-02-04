@@ -1,0 +1,104 @@
+<header class="py-20 flex items-center bg-background-light overflow-hidden">
+    <div class="container mx-auto flex flex-col lg:flex-row gap-12 lg:gap-20">
+        <div class="lg:w-1/2 flex items-center justify-center">
+            <div class="space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+                <div class="relative">
+                    <p class="text-base text-primary/60 mb-2 font-mono">~/ascii-cafe$ ./welcome</p>
+                    <h1 class="font-display font-bold text-5xl md:text-6xl text-primary">
+                        ascii Café
+                    </h1>
+                </div>
+
+                <p class="text-secondary leading-relaxed pl-4 border-l-2 border-amber-400/50">
+                    {{ if eq .Language.Lang "en" }}
+                        Your feel-good place for <span class="font-medium text-primary">code & coffee</span>.
+                        Snacks, drinks, and cozy sofas at your faculty – perfect for a break between
+                        lectures and coding sessions.
+                    {{ else }}
+                        Dein Wohlfühlort für <span class="font-medium text-primary">Code & Kaffee</span>.
+                        Snacks, Drinks und gemütliche Sofas an deiner Fakultät – perfekt für die Pause zwischen
+                        Vorlesungen und Coding-Sessions.
+                    {{ end }}
+                </p>
+
+                <a class="btn-primary" href="/menu">
+                    <span>{{ if eq .Language.Lang "en" }}browse the menu{{ else }}zum Menu{{ end }}</span>
+                    <span class="material-icons text-sm transition-transform group-hover:translate-x-1">arrow_forward</span>
+                </a>
+
+                <div class="flex items-center justify-start gap-6 text-sm text-secondary/70 pt-4">
+                    <div class="flex items-center gap-2 group">
+                        <div class="p-1.5 bg-amber-500/10 rounded-lg flex-shrink-0">
+                            <span class="material-icons text-base text-amber-500">schedule</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-medium text-primary">Mo–Fr</p>
+                            <p class="text-xs">
+                                {{ if eq .Language.Lang "en" }}9 am – 5 pm{{ else }}9 – 17 Uhr{{ end }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="h-8 w-px bg-primary/20"></div>
+
+                    <div class="flex items-center gap-2 group">
+                        <div class="p-1.5 bg-amber-500/10 rounded-lg flex-shrink-0">
+                            <span class="material-icons text-base text-amber-500">wifi</span>
+                        </div>
+                        <div class="text-left">
+                            <p class="font-medium text-primary">WiFi</p>
+                            <p class="text-xs">
+                                {{ if eq .Language.Lang "en" }}Free Eduroam{{ else }}Gratis Eduroam{{ end }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:w-1/2 flex items-center justify-center order-1 md:order-2 mb-8 md:mb-0">
+            <div class="glass-terminal w-full max-w-md sm:max-w-lg aspect-[4/3] rounded-xl sm:rounded-2xl overflow-hidden flex flex-col font-mono border border-white/20 shadow-lg">
+
+                <div class="bg-gradient-to-r from-white/40 to-white/20 backdrop-blur-xl px-4 sm:px-6 py-3 sm:py-4 flex items-center gap-3 border-b border-primary/20 relative">
+                    <div class="flex gap-2 flex-shrink-0">
+                        <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-red-400/80 hover:bg-red-400 transition-colors cursor-pointer"></div>
+                        <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-yellow-400/80 hover:bg-yellow-400 transition-colors cursor-pointer"></div>
+                        <div class="w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-green-400/80 hover:bg-green-400 transition-colors cursor-pointer"></div>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 hidden sm:block">
+                        <div class="inline-flex items-center gap-2 bg-primary/10 px-4 py-1 rounded-full backdrop-blur-sm">
+                            <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                            <span class="text-xs text-primary font-semibold tracking-widest">ascii — local — zsh</span>
+                        </div>
+                    </div>
+                    <div class="absolute left-1/2 transform -translate-x-1/2 sm:hidden">
+                        <div class="inline-flex items-center gap-1 bg-primary/10 px-3 py-0.5 rounded-full backdrop-blur-sm">
+                            <div class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></div>
+                            <span class="text-[10px] text-primary font-semibold tracking-wider">ascii-cafe</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-4 sm:p-6 md:p-8 lg:p-10 bg-paper-light text-primary space-y-4 sm:space-y-6 font-mono flex-grow">
+                    <div class="flex gap-2 items-center">
+                        <span class="opacity-60">$</span>
+                        <span class="text-sm sm:text-base">brew install coffee</span>
+                    </div>
+
+                    <div class="space-y-1">
+                        <p class="text-sm sm:text-base">=> pouring bean.pkg</p>
+                        <p class="text-xs sm:text-sm opacity-70">########################################### 100.0%</p>
+                    </div>
+
+                    <div class="pt-2">
+                        <p class="font-semibold text-sm sm:text-base">Pouring ... Done!</p>
+                        <div class="flex gap-1 mt-3 sm:mt-4 items-center">
+                            <span class="opacity-60">$</span>
+                            <span class="w-3 h-5 bg-primary/60 animate-pulse"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
