@@ -49,7 +49,8 @@
             </div>
 
             <div class="mt-8 md:mt-12 text-center">
-                <a class="btn-primary text-sm md:text-base px-4 py-2 md:px-6 md:py-3" href="{{ if eq .Language.Lang "en" }}/en/menu{{ else }}/menu{{ end }}">
+                <a class="btn-primary text-sm md:text-base px-4 py-2 md:px-6 md:py-3"
+                   href="{{ if eq .Language.Lang "en" }}/en/menu{{ else }}/menu{{ end }}">
                     {{ if eq .Language.Lang "en" }}./ view_full_menu{{ else }}./ view_full_menu{{ end }}
                 </a>
             </div>

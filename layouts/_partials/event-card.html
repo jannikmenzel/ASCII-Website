@@ -4,9 +4,12 @@
 
 {{ $link := $event.RelPermalink }}
 
-<article class="bg-white rounded-lg overflow-hidden shadow-lg border border-primary/10 flex flex-col {{ $responsiveClass }}">
+<article
+        class="bg-white rounded-lg overflow-hidden shadow-lg border border-primary/10 flex flex-col {{ $responsiveClass }}">
     <a href="{{ $link }}" class="h-48 sm:h-52 md:h-60 overflow-hidden block">
-        <img alt="{{ $event.Title }}" class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" src="{{ $event.Params.image }}"/>
+        <img alt="{{ $event.Title }}"
+             class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+             src="{{ $event.Params.image }}"/>
     </a>
     <div class="p-4 md:p-6 flex flex-col flex-1">
         <div class="flex justify-between items-center gap-2 mb-3 flex-wrap">

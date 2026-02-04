@@ -44,7 +44,8 @@
                         id="mobile-menu-button"
                         aria-label="{{ if eq .Site.Language.Lang "en" }}Open menu{{ else }}Menü öffnen{{ end }}">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M4 6h16M4 12h16M4 18h16"/>
                     </svg>
                 </button>
             </div>
@@ -72,12 +73,12 @@
 </nav>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
         if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', function() {
+            menuButton.addEventListener('click', function () {
                 mobileMenu.classList.toggle('hidden');
 
                 // Toggle icon
@@ -92,7 +93,7 @@
             });
 
             // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 if (!menuButton.contains(event.target) && !mobileMenu.contains(event.target)) {
                     mobileMenu.classList.add('hidden');
                     const icon = menuButton.querySelector('svg');
