@@ -8,6 +8,6 @@
         "postcss-purgecss": "^2.0.3",
         "tailwindcss": "^2.2.7"
     },
-    "name": "ascii-website",
+    "name": "ascii-dresden",
     "version": "0.1.0"
 }

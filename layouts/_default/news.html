@@ -15,10 +15,7 @@
             {{ $posts := where .Site.RegularPages "Section" "posts" }}
 
             {{ range $posts }}
-                {{ partial "event-card" (dict
-                        "event" .
-                        "responsiveClass" ""
-                        ) }}
+                {{ partial "event-card" (dict "event" . "responsiveClass" "") }}
             {{ end }}
         </div>
     </div>

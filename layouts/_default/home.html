@@ -82,23 +82,13 @@
                 {{ $posts := where .Site.RegularPages "Section" "posts" }}
                 {{ $sortedPosts := sort $posts "Params.date" "desc" }}
 
-                <!-- First 3 events always shown -->
                 {{ range first 3 $sortedPosts }}
-                    {{ partial "event-card" (dict
-                            "event" .
-                            "language" $currentLang
-                            "responsiveClass" ""
-                            ) }}
+                    {{ partial "event-card" (dict "event" . "language" $currentLang "responsiveClass" "") }}
                 {{ end }}
 
-                <!-- 4th event: show on sm (2-col) but hide on lg (3-col) -->
                 {{ if ge (len $sortedPosts) 4 }}
                     {{ $fourthEvent := index $sortedPosts 3 }}
-                    {{ partial "event-card" (dict
-                            "event" $fourthEvent
-                            "language" $currentLang
-                            "responsiveClass" "sm:block lg:hidden"
-                            ) }}
+                    {{ partial "event-card" (dict "event" $fourthEvent "language" $currentLang "responsiveClass" "sm:block lg:hidden") }}
                 {{ end }}
             </div>
         </div>
