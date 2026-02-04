@@ -25,6 +25,16 @@ jobs:
       - name: Build CSS with PostCSS
         run: npm run build:css
 
+      - name: Ensure Hugo partials directory
+        run: |
+          # If repository uses layouts/_partials (underscore) copy it to layouts/partials so Hugo can find partials on CI
+          if [ -d "layouts/_partials" ] && [ ! -d "layouts/partials" ]; then
+            cp -R layouts/_partials layouts/partials
+            echo "Copied layouts/_partials to layouts/partials"
+          else
+            echo "layouts/_partials not present or layouts/partials already exists; skipping copy"
+          fi
+
       - name: Install Hugo
         run: |
           HUGO_VERSION=0.120.0
