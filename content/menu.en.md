@@ -3,7 +3,10 @@ title: Menu
 draft: false
 ---
 
-# Drinks
+# Menü
+Here you'll find an overview of the dishes and drinks offered in our café. We place great emphasis on quality and freshness to provide you with a pleasant experience. Our prices are fair and transparent. Enjoy our selection!
+
+## Drinks
 
 | Drink               | Description                | Price              |
 |:--------------------|:---------------------------|:-------------------|
@@ -23,7 +26,7 @@ draft: false
 | Fritz 0.5l          | Refreshing beverage        | €2.00 + €1 deposit |
 | Winter Mate         | Special winter drink       | €1.20              |
 
-# Snacks
+## Snacks
 
 | Snack            | Description        | Price     |
 |:-----------------|:-------------------|:----------|
