@@ -74,7 +74,7 @@ hugo
 - `hugo.toml` — Hugo-Konfiguration (Sprache, Module, Build-Optionen).
 - `package.json` — Node devDependencies (Tailwind, PostCSS).
 - `static/` — statische Dateien (Dokumente, Bilder).
-- `public/` — generierte Site (nicht committen in typischen Workflows).
+- `public/` — generierte Site.
 
 ## Anpassung und Entwicklung
 
@@ -91,4 +91,4 @@ hugo
 
 ## Lizenz
 
-Dieses Projekt ist unter der MIT Lizenz lizenziert. Details dazu findest du in der `LICENSE` Datei.
+Der Sourcecode dieses Projektes ist unter der MIT Lizenz lizenziert. Details dazu findest du in der `LICENSE` Datei.
