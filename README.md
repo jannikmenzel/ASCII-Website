@@ -2,13 +2,12 @@
 
 # ASCII Dresden
 
-Eine statische Website gebaut mit Hugo und Tailwind CSS.
-
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 [![hugo](https://img.shields.io/badge/hugo-0.154%2B-informational)](hugo.toml)
 [![tailwindcss](https://img.shields.io/badge/tailwind--css-3.4+-informational)](tailwind.config.js)
 [![postcss](https://img.shields.io/badge/postcss-8.5+-informational)](postcss.config.js)
 
+Eine statische Website gebaut mit Hugo und Tailwind CSS.
 
 ## Projektübersicht
 
