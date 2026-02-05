@@ -119,7 +119,7 @@
                 localStorage.setItem('language', 'en');
 
                 // Get current path without language prefix
-                let currentPath = window.location.pathname;
+                let currentPath = globalThis.location.pathname;
                 let newPath = '/en';
 
                 // Remove existing language prefix
@@ -137,7 +137,7 @@
                     newPath += currentPath;
                 }
 
-                window.location.pathname = newPath;
+                globalThis.location.pathname = newPath;
             });
         }
 
@@ -147,7 +147,7 @@
                 localStorage.setItem('language', 'de');
 
                 // Get current path without language prefix
-                let currentPath = window.location.pathname;
+                let currentPath = globalThis.location.pathname;
                 let newPath = '/';
 
                 // Remove existing language prefix
@@ -155,18 +155,16 @@
                     newPath += currentPath.substring(3);
                 } else if (currentPath.startsWith('/en/')) {
                     newPath += currentPath.substring(3);
-                } else if (currentPath.startsWith('/de')) {
-                    newPath = '/';
-                } else if (currentPath.startsWith('/en')) {
-                    newPath = '/';
+                } else if (currentPath.startsWith('/de') || currentPath.startsWith('/en')) {
+                    // Go to root
                 } else if (currentPath === '/') {
-                    // Already on German root
+                    // Go to root
                     return;
                 } else {
                     newPath += currentPath;
                 }
 
-                window.location.pathname = newPath;
+                globalThis.location.pathname = newPath;
             });
         }
     });

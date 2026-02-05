@@ -3,7 +3,9 @@
 Eine statische Website gebaut mit Hugo und Tailwind CSS.
 
 [![license](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![hugo](https://img.shields.io/badge/hugo-0.112%2B-informational)](hugo.toml)
+[![hugo](https://img.shields.io/badge/hugo-0.154%2B-informational)](hugo.toml)
+[![tailwindcss](https://img.shields.io/badge/tailwind--css-3.4+-informational)](tailwind.config.js)
+[![postcss](https://img.shields.io/badge/postcss-8.5+-informational)](postcss.config.js)
 
 
 ## Projektübersicht
@@ -70,6 +72,7 @@ hugo
 - `data/menu.json` — strukturierte Daten für Menü.
 - `hugo.toml` — Hugo-Konfiguration (Sprache, Module, Build-Optionen).
 - `package.json` — Node devDependencies (Tailwind, PostCSS).
+- `static/` — statische Dateien (Dokumente, Bilder).
 - `public/` — generierte Site (nicht committen in typischen Workflows).
 
 ## Anpassung und Entwicklung
