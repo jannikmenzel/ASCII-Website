@@ -1,4 +1,4 @@
-![cover.png](static/docs/cover.png)
+![cover.png](static/images/cover.png)
 
 # ASCII Dresden
 
