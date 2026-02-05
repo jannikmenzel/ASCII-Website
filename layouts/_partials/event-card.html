@@ -9,7 +9,7 @@
     <a href="{{ $link }}" class="h-48 sm:h-52 md:h-60 overflow-hidden block">
         <img alt="{{ $event.Title }}"
              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-             src="{{ $event.Params.image }}"/>
+             src="{{ with resources.Get $event.Params.image }}{{ .RelPermalink }}{{ else }}{{ $event.Params.image | relURL }}{{ end }}" loading="lazy"/>
     </a>
     <div class="p-4 md:p-6 flex flex-col flex-1">
         <div class="flex justify-between items-center gap-2 mb-3 flex-wrap">
@@ -25,7 +25,7 @@
         <h3 class="font-display text-base md:text-lg mb-2 text-text-light line-clamp-2">
             <a href="{{ $link }}" class="hover:text-primary transition-colors">{{ $event.Title }}</a>
         </h3>
-        <p class="text-text-light/70 text-xs md:text-sm mb-4 flex-1 line-clamp-3">{{ $event.Params.description }}</p>
+        <p class="text-text-light/70 text-sm mb-4 flex-1 line-clamp-3">{{ $event.Params.description }}</p>
         <a class="btn-secondary text-xs md:text-sm mt-3 md:mt-4 py-2" href="{{ $link }}">
             {{ if eq $language "en" }}Read Details >{{ else }}Details lesen >{{ end }}
         </a>

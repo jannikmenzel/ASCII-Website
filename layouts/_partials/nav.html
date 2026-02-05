@@ -77,41 +77,54 @@
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-        if (menuButton && mobileMenu) {
-            menuButton.addEventListener('click', function () {
-                mobileMenu.classList.toggle('hidden');
+    if (!menuButton || !mobileMenu) return;
 
-                // Toggle icon
-                const icon = menuButton.querySelector('svg');
-                if (mobileMenu.classList.contains('hidden')) {
-                    // Menu is closed, show hamburger
-                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
-                } else {
-                    // Menu is open, show X
-                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>';
+    let isOpen = !mobileMenu.classList.contains('hidden');
+    const path = menuButton.querySelector('path');
+
+    const HAMBURGER = 'M4 6h16M4 12h16M4 18h16';
+    const CLOSE = 'M6 18L18 6M6 6l12 12';
+
+    function setIcon(open) {
+        if (!path) return;
+        path.setAttribute('d', open ? CLOSE : HAMBURGER);
+    }
+
+    function openMenu() {
+        mobileMenu.classList.remove('hidden');
+        menuButton.setAttribute('aria-expanded', 'true');
+        isOpen = true;
+        setIcon(true);
                 }
-            });
 
-            // Close menu when clicking outside
-            document.addEventListener('click', function (event) {
-                const target = event.target;
-                if (target instanceof Node &&
-                    !menuButton.contains(target) &&
-                    !mobileMenu.contains(target)) {
+    function closeMenu() {
                     mobileMenu.classList.add('hidden');
-                    const icon = menuButton.querySelector('svg');
-                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
+        menuButton.setAttribute('aria-expanded', 'false');
+        isOpen = false;
+        setIcon(false);
                 }
+
+    // Toggle on button click (stopPropagation to avoid immediate document handler)
+    menuButton.addEventListener('click', function (e) {
+        e.stopPropagation();
+        isOpen ? closeMenu() : openMenu();
             });
 
-            // Close menu when clicking a link
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    mobileMenu.classList.add('hidden');
-                    const icon = menuButton.querySelector('svg');
-                    icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>';
-                });
-            });
+    // Close when clicking outside (use closest for cheap checks)
+    document.addEventListener('click', function (e) {
+        if (!e.target || (e.target instanceof Node && !e.target.closest('#mobile-menu') && !e.target.closest('#mobile-menu-button'))) {
+            closeMenu();
         }
+    }, { passive: true });
+
+    // Delegate link clicks inside the mobile menu to a single handler
+    mobileMenu.addEventListener('click', function (e) {
+        if (e.target && e.target.closest && e.target.closest('a')) {
+            closeMenu();
+        }
+                });
+
+    // Ensure initial icon state
+    setIcon(isOpen);
     });
 </script>
