@@ -6,6 +6,8 @@ draft: false
 # Menü
 Here you'll find an overview of the dishes and drinks offered in our café. We place great emphasis on quality and freshness to provide you with a pleasant experience. Our prices are fair and transparent. Enjoy our selection!
 
+{{< image src="/images/cafe.webp" alt="Counter of the ascii café" >}}
+
 ## Drinks
 
 | Drink               | Description                | Price              |

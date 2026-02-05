@@ -6,6 +6,9 @@ draft: false
 # Menü
 Hier findet Ihr eine Übersicht über die angebotenen Speisen und Getränke in unserem Café. Wir legen großen Wert auf Qualität und Frische, um euch ein angenehmes Erlebnis zu bieten. Unsere Preise sind fair und transparent. Genießt unsere Auswahl!
 
+{{< image src="/images/cafe.webp" alt="Tresen des ascii Cafés" >}}
+
+
 ## Getränke
 
 | Getränk             | Beschreibung                   | Preis             |
