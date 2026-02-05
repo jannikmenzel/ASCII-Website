@@ -1,3 +1,5 @@
+![cover.png](static/docs/cover.png)
+
 # ASCII Dresden
 
 Eine statische Website gebaut mit Hugo und Tailwind CSS.
