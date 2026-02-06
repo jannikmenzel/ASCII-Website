@@ -1,15 +1,36 @@
 {{ $src := .Get "src" }}
 {{ $alt := .Get "alt" | default "" }}
+{{ $class := .Get "class" | default "" }}
 {{ $img := resources.Get $src }}
 
 {{ if not $img }}
     {{ errorf "Bild '%s' nicht gefunden. Achte darauf, dass es in /assets/ liegt." $src }}
 {{ end }}
 
-{{ $resized := $img.Resize "1000x" }}
+{{ $sizes := (slice 400 800 1200) }}
+{{ $sources := slice }}
+{{ range $i, $w := $sizes }}
+    {{ $res := $img.Resize (printf "%dx" $w) }}
+    {{ $sources = $sources | append $res }}
+{{ end }}
 
-<img
-        src="{{ $resized.RelPermalink }}"
+{{ $srcset := slice }}
+{{ range $sources }}
+    {{ $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) }}
+{{ end }}
+{{ $srcsetStr := delimit $srcset ", " }}
+
+{{ $largest := index $sources (sub (len $sources) 1) }}
+
+<picture>
+    <img
+        src="{{ $largest.RelPermalink }}"
+        srcset="{{ $srcsetStr }}"
+        sizes="(max-width: 600px) 100vw, 50vw"
         alt="{{ $alt }}"
+        class="{{ $class }}"
         loading="lazy"
-        style="max-width: 100%; height: auto;">
+        decoding="async"
+        style="max-width: 100%; height: auto;"
+    />
+</picture>
