@@ -24,8 +24,6 @@ ASCII Dresden ist eine mehrsprachige (Deutsch/Englisch) statische Website/Blog, 
 ![Best Practices](https://img.shields.io/badge/Best%20Practices-%25-lightgrey)
 ![SEO](https://img.shields.io/badge/SEO-%25-lightgrey)
 
-*Scores updated automatically on 2026-02-06 15:18:50 UTC
-
 ## Voraussetzungen
 
 - Hugo (Version >= 0.112.0) — siehe `hugo.toml`.
