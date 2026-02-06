@@ -1,0 +1,42 @@
+{{ $src := .src }}
+{{ $alt := .alt | default "" }}
+{{ $class := .class | default "" }}
+{{ $img := resources.Get $src }}
+
+{{ if not $img }}
+    {{ errorf "Bild '%s' nicht gefunden. Achte darauf, dass es in /assets/ liegt." $src }}
+{{ end }}
+
+{{ $sizes := (slice 400 800 1200) }}
+{{ $sources := slice }}
+{{ range $i, $w := $sizes }}
+    {{ $res := $img.Resize (printf "%dx webp" $w) }}
+    {{ $sources = $sources | append $res }}
+{{ end }}
+
+{{ $srcset := slice }}
+{{ range $sources }}
+    {{ $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) }}
+{{ end }}
+{{ $srcsetStr := delimit $srcset ", " }}
+
+{{ $webpSrcset := $srcsetStr }}
+
+{{ $largest := index $sources (sub (len $sources) 1) }}
+
+<picture>
+    <source
+        type="image/webp"
+        srcset="{{ $webpSrcset }}"
+        sizes="(max-width: 600px) 100vw, 50vw"
+    >
+    <img
+        src="{{ $largest.RelPermalink }}"
+        alt="{{ $alt }}"
+        class="max-w-full h-auto {{ $class }}"
+        loading="lazy"
+        decoding="async"
+        width="{{ $largest.Width }}"
+        height="{{ $largest.Height }}"
+    />
+</picture>

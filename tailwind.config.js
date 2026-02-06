@@ -1,5 +1,3 @@
-const typography = require('@tailwindcss/typography');
-
 module.exports = {
     content: ['./hugo_stats.json'],
     darkMode: 'class',
@@ -19,6 +17,5 @@ module.exports = {
                 sans: ['Inter', 'sans-serif'],
             },
         },
-    },
-    plugins: [typography],
+    }
 };
