@@ -7,8 +7,9 @@
         "url": "https://github.com/jannikmenzel/ASCII-Website.git"
     },
     "scripts": {
-        "build:css": "postcss assets/css/main.css -o assets/css/main.css",
-        "build": "npm run build:css"
+        "start": "hugo server -D",
+        "build": "hugo --minify",
+        "build:css": "NODE_ENV=production postcss assets/css/main.css -o resources/_gen/assets/css/main.css"
     },
     "devDependencies": {
         "tailwindcss": "^3.3.2",
