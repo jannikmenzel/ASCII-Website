@@ -14,9 +14,6 @@ jobs:
       seo: ${{ steps.scores.outputs.seo }}
 
     steps:
-      - name: Wait for deployment
-        run: sleep 60
-
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -39,17 +36,12 @@ jobs:
       - name: Extract Lighthouse Scores
         id: scores
         run: |
-          # Setze Default-Werte
           PERF=0
           ACCESS=0
           BEST=0
           SEO=0
-          
-          # Prüfe und extrahiere Scores aus verschiedenen möglichen Dateien
+
           if [ -f ".lighthouseci/assertion-results.json" ]; then
-            echo "Found assertion-results.json"
-          
-            # Methode 1: Versuche aus assertion-results.json zu extrahieren
             if jq -e '.[0].audits.performance.score' .lighthouseci/assertion-results.json > /dev/null 2>&1; then
               PERF=$(jq -r '.[0].audits.performance.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
               ACCESS=$(jq -r '.[0].audits.accessibility.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
@@ -57,12 +49,9 @@ jobs:
               SEO=$(jq -r '.[0].audits.seo.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
             fi
           fi
-          
-          # Alternative: Prüfe auf .lighthouseci/lhr-*.json Dateien
+
           if [ "$PERF" = "0" ] && ls .lighthouseci/lhr-*.json 1> /dev/null 2>&1; then
-            echo "Using lhr-*.json files"
             LHR_FILE=$(ls .lighthouseci/lhr-*.json | head -1)
-          
             if [ -f "$LHR_FILE" ]; then
               PERF=$(jq -r '.categories.performance.score // 0 | . * 100 | round' "$LHR_FILE")
               ACCESS=$(jq -r '.categories.accessibility.score // 0 | . * 100 | round' "$LHR_FILE")
@@ -70,13 +59,7 @@ jobs:
               SEO=$(jq -r '.categories.seo.score // 0 | . * 100 | round' "$LHR_FILE")
             fi
           fi
-          
-          echo "Extracted scores:"
-          echo "Performance: $PERF"
-          echo "Accessibility: $ACCESS"
-          echo "Best Practices: $BEST"
-          echo "SEO: $SEO"
-          
+
           echo "perf=$PERF" >> $GITHUB_OUTPUT
           echo "accessibility=$ACCESS" >> $GITHUB_OUTPUT
           echo "best-practices=$BEST" >> $GITHUB_OUTPUT
@@ -101,19 +84,9 @@ jobs:
 
       - name: Update README with Lighthouse scores
         run: |
-          # Debug: Zeige die extrahierten Scores
-          echo "Scores received:"
-          echo "Performance: ${{ needs.lighthouse.outputs.perf }}"
-          echo "Accessibility: ${{ needs.lighthouse.outputs.accessibility }}"
-          echo "Best Practices: ${{ needs.lighthouse.outputs.best-practices }}"
-          echo "SEO: ${{ needs.lighthouse.outputs.seo }}"
-          
-          # Farben basierend auf Scores
           get_color() {
             SCORE=$1
-            # Entferne nicht-numerische Zeichen
             SCORE_CLEANED=$(echo "$SCORE" | sed 's/[^0-9]*//g')
-          
             if [ -z "$SCORE_CLEANED" ] || [ "$SCORE_CLEANED" = "0" ]; then
               echo "lightgrey"
             elif [ "$SCORE_CLEANED" -ge 90 ]; then
@@ -126,19 +99,21 @@ jobs:
               echo "red"
             fi
           }
-          
-          PERF_COLOR=$(get_color "${{ needs.lighthouse.outputs.perf }}")
-          ACCESS_COLOR=$(get_color "${{ needs.lighthouse.outputs.accessibility }}")
-          BEST_COLOR=$(get_color "${{ needs.lighthouse.outputs.best-practices }}")
-          SEO_COLOR=$(get_color "${{ needs.lighthouse.outputs.seo }}")
-          
-          # README aktualisieren - verschiedene Platzhalter-Varianten unterstützen
-          sed -i -E "s|!\[Performance\].*|![Performance](https://img.shields.io/badge/Performance-${{ needs.lighthouse.outputs.perf }}%25-${PERF_COLOR})|g" README.md
-          sed -i -E "s|!\[Accessibility\].*|![Accessibility](https://img.shields.io/badge/Accessibility-${{ needs.lighthouse.outputs.accessibility }}%25-${ACCESS_COLOR})|g" README.md
-          sed -i -E "s|!\[Best Practices\].*|![Best Practices](https://img.shields.io/badge/Best%20Practices-${{ needs.lighthouse.outputs.best-practices }}%25-${BEST_COLOR})|g" README.md
-          sed -i -E "s|!\[SEO\].*|![SEO](https://img.shields.io/badge/SEO-${{ needs.lighthouse.outputs.seo }}%25-${SEO_COLOR})|g" README.md
-          
-          # Falls Platzhalter vorhanden sind
+
+          declare -A scores=(
+            ["Performance"]="${{ needs.lighthouse.outputs.perf }}"
+            ["Accessibility"]="${{ needs.lighthouse.outputs.accessibility }}"
+            ["Best Practices"]="${{ needs.lighthouse.outputs.best-practices }}"
+            ["SEO"]="${{ needs.lighthouse.outputs.seo }}"
+          )
+
+          for category in "${!scores[@]}"; do
+            score="${scores[$category]}"
+            color=$(get_color "$score")
+            category_escaped=$(echo "$category" | sed 's/ /%20/g')
+            sed -i -E "s|!\[$category\].*|![$category](https://img.shields.io/badge/$category_escaped-${score}%25-$color)|g" README.md
+          done
+
           sed -i "s/{PERF_SCORE}/${{ needs.lighthouse.outputs.perf }}/g" README.md
           sed -i "s/{ACCESS_SCORE}/${{ needs.lighthouse.outputs.accessibility }}/g" README.md
           sed -i "s/{BEST_SCORE}/${{ needs.lighthouse.outputs.best-practices }}/g" README.md

@@ -1,14 +1,14 @@
 {
     "ci": {
         "collect": {
-            "numberOfRuns": 10,
+            "numberOfRuns": 1,
             "settings": {
                 "emulatedFormFactor": "desktop",
                 "throttlingMethod": "devtools",
                 "throttling": {
-                    "rttMs": 150,
-                    "throughputKbps": 1638.4,
-                    "cpuSlowdownMultiplier": 3
+                    "rttMs": 40,
+                    "throughputKbps": 10240,
+                    "cpuSlowdownMultiplier": 1
                 }
             }
         },
