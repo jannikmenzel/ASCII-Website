@@ -33,7 +33,6 @@ jobs:
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
-        id: lighthouse
         with:
           urls: |
             ${{ steps.url.outputs.url }}
@@ -44,19 +43,43 @@ jobs:
       - name: Extract Lighthouse Scores
         id: scores
         run: |
-          # Prüfe, ob das JSON-File existiert
+          # Setze Default-Werte
+          PERF=0
+          ACCESS=0
+          BEST=0
+          SEO=0
+          
+          # Prüfe und extrahiere Scores aus verschiedenen möglichen Dateien
           if [ -f ".lighthouseci/assertion-results.json" ]; then
-            PERF=$(jq -r '.[0].audits.performance.score * 100 | round' .lighthouseci/assertion-results.json)
-            ACCESS=$(jq -r '.[0].audits.accessibility.score * 100 | round' .lighthouseci/assertion-results.json)
-            BEST=$(jq -r '.[0].audits["best-practices"].score * 100 | round' .lighthouseci/assertion-results.json)
-            SEO=$(jq -r '.[0].audits.seo.score * 100 | round' .lighthouseci/assertion-results.json)
-          else
-            # Fallback auf 0
-            PERF=0
-            ACCESS=0
-            BEST=0
-            SEO=0
+            echo "Found assertion-results.json"
+          
+            # Methode 1: Versuche aus assertion-results.json zu extrahieren
+            if jq -e '.[0].audits.performance.score' .lighthouseci/assertion-results.json > /dev/null 2>&1; then
+              PERF=$(jq -r '.[0].audits.performance.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
+              ACCESS=$(jq -r '.[0].audits.accessibility.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
+              BEST=$(jq -r '.[0].audits["best-practices"].score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
+              SEO=$(jq -r '.[0].audits.seo.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
+            fi
           fi
+          
+          # Alternative: Prüfe auf .lighthouseci/lhr-*.json Dateien
+          if [ "$PERF" = "0" ] && ls .lighthouseci/lhr-*.json 1> /dev/null 2>&1; then
+            echo "Using lhr-*.json files"
+            LHR_FILE=$(ls .lighthouseci/lhr-*.json | head -1)
+          
+            if [ -f "$LHR_FILE" ]; then
+              PERF=$(jq -r '.categories.performance.score // 0 | . * 100 | round' "$LHR_FILE")
+              ACCESS=$(jq -r '.categories.accessibility.score // 0 | . * 100 | round' "$LHR_FILE")
+              BEST=$(jq -r '.categories["best-practices"].score // 0 | . * 100 | round' "$LHR_FILE")
+              SEO=$(jq -r '.categories.seo.score // 0 | . * 100 | round' "$LHR_FILE")
+            fi
+          fi
+          
+          echo "Extracted scores:"
+          echo "Performance: $PERF"
+          echo "Accessibility: $ACCESS"
+          echo "Best Practices: $BEST"
+          echo "SEO: $SEO"
           
           echo "perf=$PERF" >> $GITHUB_OUTPUT
           echo "accessibility=$ACCESS" >> $GITHUB_OUTPUT
@@ -72,30 +95,60 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup git config
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
 
       - name: Update README with Lighthouse scores
         run: |
+          # Debug: Zeige die extrahierten Scores
+          echo "Scores received:"
+          echo "Performance: ${{ needs.lighthouse.outputs.perf }}"
+          echo "Accessibility: ${{ needs.lighthouse.outputs.accessibility }}"
+          echo "Best Practices: ${{ needs.lighthouse.outputs.best-practices }}"
+          echo "SEO: ${{ needs.lighthouse.outputs.seo }}"
+          
           # Farben basierend auf Scores
           get_color() {
-            if [ $1 -ge 90 ]; then echo "brightgreen"
-            elif [ $1 -ge 70 ]; then echo "green"
-            elif [ $1 -ge 50 ]; then echo "yellow"
-            else echo "red"
+            SCORE=$1
+            # Entferne nicht-numerische Zeichen
+            SCORE_CLEANED=$(echo "$SCORE" | sed 's/[^0-9]*//g')
+          
+            if [ -z "$SCORE_CLEANED" ] || [ "$SCORE_CLEANED" = "0" ]; then
+              echo "lightgrey"
+            elif [ "$SCORE_CLEANED" -ge 90 ]; then
+              echo "brightgreen"
+            elif [ "$SCORE_CLEANED" -ge 70 ]; then
+              echo "green"
+            elif [ "$SCORE_CLEANED" -ge 50 ]; then
+              echo "yellow"
+            else
+              echo "red"
             fi
           }
           
-          PERF_COLOR=$(get_color ${{ needs.lighthouse.outputs.perf }})
-          ACCESS_COLOR=$(get_color ${{ needs.lighthouse.outputs.accessibility }})
-          BEST_COLOR=$(get_color ${{ needs.lighthouse.outputs.best-practices }})
-          SEO_COLOR=$(get_color ${{ needs.lighthouse.outputs.seo }})
+          PERF_COLOR=$(get_color "${{ needs.lighthouse.outputs.perf }}")
+          ACCESS_COLOR=$(get_color "${{ needs.lighthouse.outputs.accessibility }}")
+          BEST_COLOR=$(get_color "${{ needs.lighthouse.outputs.best-practices }}")
+          SEO_COLOR=$(get_color "${{ needs.lighthouse.outputs.seo }}")
           
-          # README aktualisieren
-          sed -i "s/Performance-{PERF_SCORE}%25-{COLOR}/Performance-${{ needs.lighthouse.outputs.perf }}%25-${PERF_COLOR}/g" README.md
-          sed -i "s/Accessibility-{ACCESS_SCORE}%25-{COLOR}/Accessibility-${{ needs.lighthouse.outputs.accessibility }}%25-${ACCESS_COLOR}/g" README.md
-          sed -i "s/Best%20Practices-{BEST_SCORE}%25-{COLOR}/Best%20Practices-${{ needs.lighthouse.outputs.best-practices }}%25-${BEST_COLOR}/g" README.md
-          sed -i "s/SEO-{SEO_SCORE}%25-{COLOR}/SEO-${{ needs.lighthouse.outputs.seo }}%25-${SEO_COLOR}/g" README.md
+          # README aktualisieren - verschiedene Platzhalter-Varianten unterstützen
+          sed -i -E "s|!\[Performance\].*|![Performance](https://img.shields.io/badge/Performance-${{ needs.lighthouse.outputs.perf }}%25-${PERF_COLOR})|g" README.md
+          sed -i -E "s|!\[Accessibility\].*|![Accessibility](https://img.shields.io/badge/Accessibility-${{ needs.lighthouse.outputs.accessibility }}%25-${ACCESS_COLOR})|g" README.md
+          sed -i -E "s|!\[Best Practices\].*|![Best Practices](https://img.shields.io/badge/Best%20Practices-${{ needs.lighthouse.outputs.best-practices }}%25-${BEST_COLOR})|g" README.md
+          sed -i -E "s|!\[SEO\].*|![SEO](https://img.shields.io/badge/SEO-${{ needs.lighthouse.outputs.seo }}%25-${SEO_COLOR})|g" README.md
           
-          # Optional: Timestamp hinzufügen
+          # Falls Platzhalter vorhanden sind
+          sed -i "s/{PERF_SCORE}/${{ needs.lighthouse.outputs.perf }}/g" README.md
+          sed -i "s/{ACCESS_SCORE}/${{ needs.lighthouse.outputs.accessibility }}/g" README.md
+          sed -i "s/{BEST_SCORE}/${{ needs.lighthouse.outputs.best-practices }}/g" README.md
+          sed -i "s/{SEO_SCORE}/${{ needs.lighthouse.outputs.seo }}/g" README.md
+          
+          # Timestamp hinzufügen
           TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
           sed -i "s/Scores updated automatically.*/Scores updated automatically on $TIMESTAMP/g" README.md
 
@@ -104,3 +157,4 @@ jobs:
         with:
           commit_message: "docs: Update Lighthouse scores in README"
           file_pattern: README.md
+          branch: ${{ github.ref }}
