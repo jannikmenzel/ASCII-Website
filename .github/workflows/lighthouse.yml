@@ -31,7 +31,98 @@ jobs:
           USER_NAME="${REPO_NAME%/*}"
           echo "url=https://${USER_NAME}.github.io/${REPO_NAME#*/}" >> $GITHUB_OUTPUT
 
-      - name: Run Lighthouse CI
+      - name: Install dependencies
+        run: |
+          npm install -g @lhci/cli
+          npm install -g lighthouse
+
+      - name: Run multiple Lighthouse tests
+        id: lighthouse-tests
+        run: |
+          # Anzahl der Durchläufe (anpassbar)
+          RUNS=3
+          TEMP_DIR=".lighthouse-temp"
+          mkdir -p $TEMP_DIR
+          
+          # Arrays für die Scores
+          PERF_SCORES=()
+          ACCESS_SCORES=()
+          BEST_SCORES=()
+          SEO_SCORES=()
+          
+          echo "Running Lighthouse $RUNS times..."
+          
+          for i in $(seq 1 $RUNS); do
+            echo "Run $i/$RUNS"
+          
+            # Warte zwischen den Durchläufen, um Caching-Effekte zu reduzieren
+            if [ $i -gt 1 ]; then
+              sleep 10
+            fi
+          
+            # Lighthouse ausführen und temporär speichern
+            TEMP_FILE="$TEMP_DIR/lhr-$i.json"
+            npx lighthouse "${{ steps.url.outputs.url }}" \
+              --output=json \
+              --output-path=$TEMP_FILE \
+              --chrome-flags="--headless --no-sandbox" \
+              --only-categories=performance,accessibility,best-practices,seo
+          
+            if [ -f "$TEMP_FILE" ]; then
+              # Scores extrahieren
+              PERF=$(jq -r '.categories.performance.score // 0 | . * 100 | round' "$TEMP_FILE")
+              ACCESS=$(jq -r '.categories.accessibility.score // 0 | . * 100 | round' "$TEMP_FILE")
+              BEST=$(jq -r '.categories["best-practices"].score // 0 | . * 100 | round' "$TEMP_FILE")
+              SEO=$(jq -r '.categories.seo.score // 0 | . * 100 | round' "$TEMP_FILE")
+          
+              # Scores zu den Arrays hinzufügen
+              PERF_SCORES+=($PERF)
+              ACCESS_SCORES+=($ACCESS)
+              BEST_SCORES+=($BEST)
+              SEO_SCORES+=($SEO)
+          
+              echo "Run $i scores: P=$PERF, A=$ACCESS, B=$BEST, S=$SEO"
+            fi
+          done
+          
+          # Funktion zur Berechnung des Durchschnitts
+          calculate_average() {
+            local scores=("$@")
+            local sum=0
+            local count=${#scores[@]}
+          
+            if [ $count -eq 0 ]; then
+              echo "0"
+              return
+            fi
+          
+            for score in "${scores[@]}"; do
+              sum=$((sum + score))
+            done
+          
+            echo $((sum / count))
+          }
+          
+          # Durchschnittswerte berechnen
+          AVG_PERF=$(calculate_average "${PERF_SCORES[@]}")
+          AVG_ACCESS=$(calculate_average "${ACCESS_SCORES[@]}")
+          AVG_BEST=$(calculate_average "${BEST_SCORES[@]}")
+          AVG_SEO=$(calculate_average "${SEO_SCORES[@]}")
+          
+          # Debug-Ausgabe
+          echo "=== Final Average Scores ==="
+          echo "Performance: $AVG_PERF% (based on ${#PERF_SCORES[@]} runs: ${PERF_SCORES[@]})"
+          echo "Accessibility: $AVG_ACCESS% (based on ${#ACCESS_SCORES[@]} runs: ${ACCESS_SCORES[@]})"
+          echo "Best Practices: $AVG_BEST% (based on ${#BEST_SCORES[@]} runs: ${BEST_SCORES[@]})"
+          echo "SEO: $AVG_SEO% (based on ${#SEO_SCORES[@]} runs: ${SEO_SCORES[@]})"
+          
+          # Outputs setzen
+          echo "perf=$AVG_PERF" >> $GITHUB_OUTPUT
+          echo "accessibility=$AVG_ACCESS" >> $GITHUB_OUTPUT
+          echo "best-practices=$AVG_BEST" >> $GITHUB_OUTPUT
+          echo "seo=$AVG_SEO" >> $GITHUB_OUTPUT
+
+      - name: Run Lighthouse CI for artifact upload
         uses: treosh/lighthouse-ci-action@v11
         with:
           urls: |
@@ -39,52 +130,6 @@ jobs:
           uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./.github/lighthouse/config.json
-
-      - name: Extract Lighthouse Scores
-        id: scores
-        run: |
-          # Setze Default-Werte
-          PERF=0
-          ACCESS=0
-          BEST=0
-          SEO=0
-          
-          # Prüfe und extrahiere Scores aus verschiedenen möglichen Dateien
-          if [ -f ".lighthouseci/assertion-results.json" ]; then
-            echo "Found assertion-results.json"
-          
-            # Methode 1: Versuche aus assertion-results.json zu extrahieren
-            if jq -e '.[0].audits.performance.score' .lighthouseci/assertion-results.json > /dev/null 2>&1; then
-              PERF=$(jq -r '.[0].audits.performance.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
-              ACCESS=$(jq -r '.[0].audits.accessibility.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
-              BEST=$(jq -r '.[0].audits["best-practices"].score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
-              SEO=$(jq -r '.[0].audits.seo.score // 0 | . * 100 | round' .lighthouseci/assertion-results.json)
-            fi
-          fi
-          
-          # Alternative: Prüfe auf .lighthouseci/lhr-*.json Dateien
-          if [ "$PERF" = "0" ] && ls .lighthouseci/lhr-*.json 1> /dev/null 2>&1; then
-            echo "Using lhr-*.json files"
-            LHR_FILE=$(ls .lighthouseci/lhr-*.json | head -1)
-          
-            if [ -f "$LHR_FILE" ]; then
-              PERF=$(jq -r '.categories.performance.score // 0 | . * 100 | round' "$LHR_FILE")
-              ACCESS=$(jq -r '.categories.accessibility.score // 0 | . * 100 | round' "$LHR_FILE")
-              BEST=$(jq -r '.categories["best-practices"].score // 0 | . * 100 | round' "$LHR_FILE")
-              SEO=$(jq -r '.categories.seo.score // 0 | . * 100 | round' "$LHR_FILE")
-            fi
-          fi
-          
-          echo "Extracted scores:"
-          echo "Performance: $PERF"
-          echo "Accessibility: $ACCESS"
-          echo "Best Practices: $BEST"
-          echo "SEO: $SEO"
-          
-          echo "perf=$PERF" >> $GITHUB_OUTPUT
-          echo "accessibility=$ACCESS" >> $GITHUB_OUTPUT
-          echo "best-practices=$BEST" >> $GITHUB_OUTPUT
-          echo "seo=$SEO" >> $GITHUB_OUTPUT
 
   update-readme:
     runs-on: ubuntu-latest
@@ -106,11 +151,11 @@ jobs:
       - name: Update README with Lighthouse scores
         run: |
           # Debug: Zeige die extrahierten Scores
-          echo "Scores received:"
-          echo "Performance: ${{ needs.lighthouse.outputs.perf }}"
-          echo "Accessibility: ${{ needs.lighthouse.outputs.accessibility }}"
-          echo "Best Practices: ${{ needs.lighthouse.outputs.best-practices }}"
-          echo "SEO: ${{ needs.lighthouse.outputs.seo }}"
+          echo "Average scores received:"
+          echo "Performance: ${{ needs.lighthouse.outputs.perf }}%"
+          echo "Accessibility: ${{ needs.lighthouse.outputs.accessibility }}%"
+          echo "Best Practices: ${{ needs.lighthouse.outputs.best-practices }}%"
+          echo "SEO: ${{ needs.lighthouse.outputs.seo }}%"
           
           # Farben basierend auf Scores
           get_color() {
@@ -136,7 +181,7 @@ jobs:
           BEST_COLOR=$(get_color "${{ needs.lighthouse.outputs.best-practices }}")
           SEO_COLOR=$(get_color "${{ needs.lighthouse.outputs.seo }}")
           
-          # README aktualisieren - verschiedene Platzhalter-Varianten unterstützen
+          # README aktualisieren
           sed -i -E "s|!\[Performance\].*|![Performance](https://img.shields.io/badge/Performance-${{ needs.lighthouse.outputs.perf }}%25-${PERF_COLOR})|g" README.md
           sed -i -E "s|!\[Accessibility\].*|![Accessibility](https://img.shields.io/badge/Accessibility-${{ needs.lighthouse.outputs.accessibility }}%25-${ACCESS_COLOR})|g" README.md
           sed -i -E "s|!\[Best Practices\].*|![Best Practices](https://img.shields.io/badge/Best%20Practices-${{ needs.lighthouse.outputs.best-practices }}%25-${BEST_COLOR})|g" README.md
@@ -147,14 +192,10 @@ jobs:
           sed -i "s/{ACCESS_SCORE}/${{ needs.lighthouse.outputs.accessibility }}/g" README.md
           sed -i "s/{BEST_SCORE}/${{ needs.lighthouse.outputs.best-practices }}/g" README.md
           sed -i "s/{SEO_SCORE}/${{ needs.lighthouse.outputs.seo }}/g" README.md
-          
-          # Timestamp hinzufügen
-          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          sed -i "s/Scores updated automatically.*/Scores updated automatically on $TIMESTAMP/g" README.md
 
       - name: Commit and push changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "docs: Update Lighthouse scores in README"
+          commit_message: "docs: Update Lighthouse scores"
           file_pattern: README.md
           branch: ${{ github.ref }}
