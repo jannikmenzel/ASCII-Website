@@ -15,6 +15,9 @@ jobs:
       seo: ${{ steps.scores.outputs.seo }}
 
     steps:
+      - name: Wait for deployment
+        run: sleep 60
+
       - name: Checkout
         uses: actions/checkout@v4
 
@@ -30,7 +33,7 @@ jobs:
         with:
           urls: |
             ${{ steps.url.outputs.url }}
-          uploadArtifacts: false
+          uploadArtifacts: true
           temporaryPublicStorage: true
           configPath: ./.github/lighthouse/config.json
 
