@@ -1,47 +1,20 @@
 {
     "ci": {
         "collect": {
-            "numberOfRuns": 10,
+            "url": [
+                "{{URL}}"
+            ],
             "settings": {
                 "emulatedFormFactor": "desktop",
-                "throttlingMethod": "devtools",
-                "throttling": {
-                    "rttMs": 150,
-                    "throughputKbps": 1638.4,
-                    "cpuSlowdownMultiplier": 3
-                }
+                "throttlingMethod": "provided",
+                "onlyCategories": [
+                    "performance",
+                    "accessibility",
+                    "best-practices",
+                    "seo"
+                ],
+                "disableStorageReset": true
             }
-        },
-        "assert": {
-            "assertions": {
-                "categories:performance": [
-                    "warn",
-                    {
-                        "minScore": 0.8
-                    }
-                ],
-                "categories:accessibility": [
-                    "warn",
-                    {
-                        "minScore": 0.9
-                    }
-                ],
-                "categories:best-practices": [
-                    "warn",
-                    {
-                        "minScore": 0.9
-                    }
-                ],
-                "categories:seo": [
-                    "warn",
-                    {
-                        "minScore": 0.9
-                    }
-                ]
-            }
-        },
-        "upload": {
-            "target": "temporary-public-storage"
         }
     }
 }
