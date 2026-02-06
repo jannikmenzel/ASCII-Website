@@ -1,8 +1,13 @@
 {
     "ci": {
         "collect": {
-            "staticDistDir": "./public",
-            "url": ["http://localhost:1313"]
+            "url": "${{ steps.deployment.outputs.page_url }}",
+            "startServerCommand": "",
+            "numberOfRuns": 3,
+            "settings": {
+                "onlyCategories": ["performance", "accessibility", "best-practices", "seo"],
+                "chromeFlags": "--no-sandbox"
+            }
         },
         "assert": {
             "assertions": {
@@ -13,7 +18,8 @@
             }
         },
         "upload": {
-            "target": "temporary-public-storage"
+            "target": "temporary-public-storage",
+            "githubToken": "${{ secrets.GITHUB_TOKEN }}"
         }
     }
 }

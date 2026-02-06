@@ -1,28 +1,21 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
-name: Deploy Hugo site to Pages
+name: Deploy Hugo site with Lighthouse audit
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches:
       - main
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# Default to bash
 defaults:
   run:
     shell: bash
@@ -80,6 +73,12 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
+      - name: Save build for lighthouse
+        uses: actions/upload-artifact@v4
+        with:
+          name: hugo-build
+          path: ./public
+          retention-days: 1
 
   # Deployment job
   deploy:
@@ -92,3 +91,93 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  # Lighthouse audit job
+  lighthouse:
+    runs-on: ubuntu-latest
+    needs: deploy
+    outputs:
+      performance_score: ${{ steps.lighthouse.outputs.performance_score }}
+      accessibility_score: ${{ steps.lighthouse.outputs.accessibility_score }}
+      best_practices_score: ${{ steps.lighthouse.outputs.best_practices_score }}
+      seo_score: ${{ steps.lighthouse.outputs.seo_score }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Wait for deployment
+        run: sleep 60
+
+      - name: Run Lighthouse CI
+        id: lighthouse
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          runs: 3
+          preflight: false
+
+      - name: Update README with Lighthouse badges
+        run: |
+          # Function to determine badge color based on score
+          get_color() {
+            local score=$1
+            if (( $(echo "$score >= 0.9" | bc -l) )); then
+              echo "brightgreen"
+            elif (( $(echo "$score >= 0.7" | bc -l) )); then
+              echo "yellow"
+            else
+              echo "red"
+            fi
+          }
+          
+          # Extract scores and convert to percentages
+          performance_percent=$(echo "${{ steps.lighthouse.outputs.performance_score }}" | awk '{printf "%.0f", $1 * 100}')
+          accessibility_percent=$(echo "${{ steps.lighthouse.outputs.accessibility_score }}" | awk '{printf "%.0f", $1 * 100}')
+          best_practices_percent=$(echo "${{ steps.lighthouse.outputs.best_practices_score }}" | awk '{printf "%.0f", $1 * 100}')
+          seo_percent=$(echo "${{ steps.lighthouse.outputs.seo_score }}" | awk '{printf "%.0f", $1 * 100}')
+          
+          # Get colors
+          perf_color=$(get_color "${{ steps.lighthouse.outputs.performance_score }}")
+          acc_color=$(get_color "${{ steps.lighthouse.outputs.accessibility_score }}")
+          bp_color=$(get_color "${{ steps.lighthouse.outputs.best_practices_score }}")
+          seo_color=$(get_color "${{ steps.lighthouse.outputs.seo_score }}")
+          
+          # Create badge URLs
+          perf_badge="![Performance](https://img.shields.io/badge/Performance-${performance_percent}%25-${perf_color})"
+          acc_badge="![Accessibility](https://img.shields.io/badge/Accessibility-${accessibility_percent}%25-${acc_color})"
+          bp_badge="![Best Practices](https://img.shields.io/badge/Best_Practices-${best_practices_percent}%25-${bp_color})"
+          seo_badge="![SEO](https://img.shields.io/badge/SEO-${seo_percent}%25-${seo_color})"
+          
+          # Create badges section
+          badges_section="# Lighthouse Scores\n\n${perf_badge}\n${acc_badge}\n${bp_badge}\n${seo_badge}\n\n"
+          
+          # Update README.md
+          # Find where the current badges section ends and the next section begins
+          awk -v badges="$badges_section" '
+          /^# Lighthouse Scores/ {
+            in_section = 1
+            print badges
+            skip = 1
+            next
+          }
+          /^#/ && !/^# Lighthouse Scores/ && in_section {
+            in_section = 0
+          }
+          !skip {
+            print
+          }
+          skip && /^# [^L]|^##|^[^#]/ && !/^# Lighthouse Scores/ {
+            skip = 0
+            print $0
+          }
+          ' README.md > README.tmp && mv README.tmp README.md
+
+      - name: Commit updated README
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update Lighthouse scores" || echo "No changes to commit"
+          git push

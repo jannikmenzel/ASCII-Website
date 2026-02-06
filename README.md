@@ -19,9 +19,12 @@ ASCII Dresden ist eine mehrsprachige (Deutsch/Englisch) statische Website/Blog, 
 
 ## Performance Übersicht
 
-## 📊 Performance
+## Lighthouse Scores
 
-![Lighthouse](https://img.shields.io/badge/dynamic/json?url=https://github.com/USERNAME/REPO/raw/main/lighthouse-metrics.json&label=Performance&query=$.categories.performance.score&color=brightgreen&suffix=/1.0)
+![Performance](https://img.shields.io/badge/Performance-${percent}%25-${color})
+![Accessibility](https://img.shields.io/badge/Accessibility-${percent}%25-${color})
+![Best Practices](https://img.shields.io/badge/Best_Practices-${percent}%25-${color})
+![SEO](https://img.shields.io/badge/SEO-${percent}%25-${color})
 
 ## Voraussetzungen
 
