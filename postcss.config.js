@@ -3,5 +3,5 @@ const tailwind = require('tailwindcss')(tailwindConfig);
 const autoprefixer = require('autoprefixer');
 
 module.exports = {
-    plugins: [tailwind, autoprefixer, ...(process.env.HUGO_ENVIRONMENT === 'production' ? [require('cssnano')({ preset: 'default' })] : [])],
+    plugins: [tailwind, ...(process.env.HUGO_ENVIRONMENT === 'production' ? [autoprefixer] : [])],
 };

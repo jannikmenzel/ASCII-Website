@@ -1,7 +1,7 @@
 const typography = require('@tailwindcss/typography');
 
 module.exports = {
-    content: ['./hugo_stats.json', './layouts/**/*.html', './content/**/*.md', './assets/**/*.{js,css}'],
+    content: ['./hugo_stats.json'],
     darkMode: 'class',
     theme: {
         extend: {
