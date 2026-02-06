@@ -11,6 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
 
+    outputs:
+      perf: ${{ steps.scores.outputs.perf }}
+      accessibility: ${{ steps.scores.outputs.accessibility }}
+      best-practices: ${{ steps.scores.outputs.best-practices }}
+      seo: ${{ steps.scores.outputs.seo }}
+
     steps:
       - name: Wait for deployment
         run: sleep 60
@@ -27,6 +33,7 @@ jobs:
 
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v11
+        id: lighthouse
         with:
           urls: |
             ${{ steps.url.outputs.url }}
@@ -34,6 +41,66 @@ jobs:
           temporaryPublicStorage: true
           configPath: ./.github/lighthouse/config.json
 
-      - name: Save scores to environment file
+      - name: Extract Lighthouse Scores
+        id: scores
         run: |
-          echo "LIGHTHOUSE_URL=${{ steps.url.outputs.url }}" >> $GITHUB_ENV
+          # Prüfe, ob das JSON-File existiert
+          if [ -f ".lighthouseci/assertion-results.json" ]; then
+            PERF=$(jq -r '.[0].audits.performance.score * 100 | round' .lighthouseci/assertion-results.json)
+            ACCESS=$(jq -r '.[0].audits.accessibility.score * 100 | round' .lighthouseci/assertion-results.json)
+            BEST=$(jq -r '.[0].audits["best-practices"].score * 100 | round' .lighthouseci/assertion-results.json)
+            SEO=$(jq -r '.[0].audits.seo.score * 100 | round' .lighthouseci/assertion-results.json)
+          else
+            # Fallback auf 0
+            PERF=0
+            ACCESS=0
+            BEST=0
+            SEO=0
+          fi
+          
+          echo "perf=$PERF" >> $GITHUB_OUTPUT
+          echo "accessibility=$ACCESS" >> $GITHUB_OUTPUT
+          echo "best-practices=$BEST" >> $GITHUB_OUTPUT
+          echo "seo=$SEO" >> $GITHUB_OUTPUT
+
+  update-readme:
+    runs-on: ubuntu-latest
+    needs: lighthouse
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Update README with Lighthouse scores
+        run: |
+          # Farben basierend auf Scores
+          get_color() {
+            if [ $1 -ge 90 ]; then echo "brightgreen"
+            elif [ $1 -ge 70 ]; then echo "green"
+            elif [ $1 -ge 50 ]; then echo "yellow"
+            else echo "red"
+            fi
+          }
+          
+          PERF_COLOR=$(get_color ${{ needs.lighthouse.outputs.perf }})
+          ACCESS_COLOR=$(get_color ${{ needs.lighthouse.outputs.accessibility }})
+          BEST_COLOR=$(get_color ${{ needs.lighthouse.outputs.best-practices }})
+          SEO_COLOR=$(get_color ${{ needs.lighthouse.outputs.seo }})
+          
+          # README aktualisieren
+          sed -i "s/Performance-{PERF_SCORE}%25-{COLOR}/Performance-${{ needs.lighthouse.outputs.perf }}%25-${PERF_COLOR}/g" README.md
+          sed -i "s/Accessibility-{ACCESS_SCORE}%25-{COLOR}/Accessibility-${{ needs.lighthouse.outputs.accessibility }}%25-${ACCESS_COLOR}/g" README.md
+          sed -i "s/Best%20Practices-{BEST_SCORE}%25-{COLOR}/Best%20Practices-${{ needs.lighthouse.outputs.best-practices }}%25-${BEST_COLOR}/g" README.md
+          sed -i "s/SEO-{SEO_SCORE}%25-{COLOR}/SEO-${{ needs.lighthouse.outputs.seo }}%25-${SEO_COLOR}/g" README.md
+          
+          # Optional: Timestamp hinzufügen
+          TIMESTAMP=$(date -u +"%Y-%m-%d %H:%M:%S UTC")
+          sed -i "s/Scores updated automatically.*/Scores updated automatically on $TIMESTAMP/g" README.md
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "docs: Update Lighthouse scores in README"
+          file_pattern: README.md

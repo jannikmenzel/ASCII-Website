@@ -17,6 +17,15 @@ ASCII Dresden ist eine mehrsprachige (Deutsch/Englisch) statische Website/Blog, 
 - Layouts unter `layouts/` und Partial-Templates unter `layouts/_partials/`.
 - Tailwind/PostCSS Pipeline konfiguriert in `postcss.config.js` und `tailwind.config.js`.
 
+## Lighthouse Performance
+
+![Performance](https://img.shields.io/badge/Performance-{PERF_SCORE}%25-{COLOR})
+![Accessibility](https://img.shields.io/badge/Accessibility-{ACCESS_SCORE}%25-{COLOR})
+![Best Practices](https://img.shields.io/badge/Best%20Practices-{BEST_SCORE}%25-{COLOR})
+![SEO](https://img.shields.io/badge/SEO-{SEO_SCORE}%25-{COLOR})
+
+*Scores updated automatically on every deploy*
+
 ## Voraussetzungen
 
 - Hugo (Version >= 0.112.0) — siehe `hugo.toml`.
