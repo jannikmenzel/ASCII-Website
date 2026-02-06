@@ -2,6 +2,7 @@
 title: About Us
 draft: false
 layout: about
+description: "About ASCII Café at TU Dresden — who we are, what we do, and how to get involved."
 ---
 # About Us
 

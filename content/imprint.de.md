@@ -1,6 +1,7 @@
 ---
 title: Impressum
 draft: false
+description: "Rechtliche Angaben und Kontaktinformationen des studentischen Cafés ASCII Dresden."
 ---
 
 # Impressum

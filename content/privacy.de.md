@@ -1,6 +1,7 @@
 ---
 title: Datenschutzerklärung
 draft: false
+description: "Informationen zur Erhebung und Verarbeitung personenbezogener Daten auf der Website des ASCII Cafés Dresden."
 ---
 
 # Datenschutzerklärung

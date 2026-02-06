@@ -1,6 +1,7 @@
 ---
 title: Imprint
 draft: false
+description: "Legal notice and contact details for ASCII Dresden student café."
 ---
 
 # Imprint

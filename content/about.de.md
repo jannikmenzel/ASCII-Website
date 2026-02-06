@@ -2,6 +2,7 @@
 title: Über Uns
 draft: false
 layout: about
+description: "Infos zum studentischen ASCII Café an der TU Dresden: Wer wir sind, unsere Werte und wie du uns erreichst."
 ---
 # Über Uns
 

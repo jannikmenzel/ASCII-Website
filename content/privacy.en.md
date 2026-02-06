@@ -1,6 +1,7 @@
 ---
 title: Privacy Policy
 draft: false
+description: "Information about the collection and processing of personal data on the ASCII Café Dresden website."
 ---
 
 # Privacy Policy

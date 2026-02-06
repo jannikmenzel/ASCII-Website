@@ -1,6 +1,7 @@
 ---
 title: Menu
 draft: false
+description: "Current menu of the ASCII Café at TU Dresden — drinks and snacks, fresh and affordable for students."
 ---
 
 # Menü

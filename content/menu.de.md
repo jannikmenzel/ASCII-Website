@@ -1,6 +1,7 @@
 ---
 title: Menü
 draft: false
+description: "Aktuelle Speisen- und Getränkeauswahl des ASCII Cafés an der TU Dresden — frisch, preiswert und studentisch."
 ---
 
 # Menü
