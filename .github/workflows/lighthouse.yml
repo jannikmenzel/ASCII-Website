@@ -1,0 +1,39 @@
+name: Lighthouse CI
+
+on:
+  workflow_run:
+    workflows: ["Deploy Hugo site to Pages"]
+    types:
+      - completed
+
+jobs:
+  lighthouse:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    steps:
+      - name: Wait for deployment
+        run: sleep 60
+
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get deployment URL
+        id: url
+        run: |
+          REPO_NAME="${{ github.repository }}"
+          USER_NAME="${REPO_NAME%/*}"
+          echo "url=https://${USER_NAME}.github.io/${REPO_NAME#*/}" >> $GITHUB_OUTPUT
+
+      - name: Run Lighthouse CI
+        uses: treosh/lighthouse-ci-action@v11
+        with:
+          urls: |
+            ${{ steps.url.outputs.url }}
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+          configPath: ./.github/lighthouse/config.json
+
+      - name: Save scores to environment file
+        run: |
+          echo "LIGHTHOUSE_URL=${{ steps.url.outputs.url }}" >> $GITHUB_ENV
