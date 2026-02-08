@@ -4,52 +4,21 @@ draft: false
 layout: about
 description: "About ASCII Café at TU Dresden — who we are, what we do, and how to get involved."
 ---
+
 # About Us
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Welcome to **ASCII Café**, a student-run café at the Faculty of Computer Science at TU Dresden. We offer snacks, hot and cold drinks, and cozy sofas — the perfect place to relax and connect with other students.
 
-## H2 Heading
-### H3 Heading
-#### H4 Heading
-##### H5 Heading
-###### H6 Heading
+{{< image src="/images/cafe.webp" alt="Counter of ascii Cafés" >}}
 
-## Lists
+## Join Us
 
-- Unordered list item 1
-- Unordered list item 2
-    - Subitem 2.1
-    - Subitem 2.2
+Do you want to become part of a vibrant group and enrich the campus community? Here, you can not only brew coffee but also make new friends, organize events, and be part of a lively network.
 
-1. Ordered list item 1
-2. Ordered list item 2
-    1. Subitem 2.1
-    2. Subitem 2.2
+## How to Reach Us
 
-## Table
+- **Location:** Andreas-Pfitzmann-Bau, Room E016
+- **Opening Hours:** Monday to Friday, 09:00 – 17:00 | Saturday: 09:00 – 15:00
+- **Contact:** [info@ascii-dresden.de](mailto:info@ascii-dresden.de)
 
-| Name             | Age | Occupation      |
-|------------------|-----|-----------------|
-| Max Mustermann   | 30  | Developer       |
-| Erika Musterfrau | 28  | Designer        |
-| John Doe         | 35  | Project Manager |
-
-## Links
-
-[Website](https://example.com)
-
-## Images
-
-![Example image](https://placehold.co/600x400)
-
-## Quotes
-
-> This is a block quote.
-
-## Bold and Italic
-
-**Bold** and *italic* as well as ***both***.
-
-## Horizontal Rule
-
----
+We look forward to your visit and to shaping the ASCII world together!

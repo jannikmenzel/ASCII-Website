@@ -4,52 +4,21 @@ draft: false
 layout: about
 description: "Infos zum studentischen ASCII Café an der TU Dresden: Wer wir sind, unsere Werte und wie du uns erreichst."
 ---
+
 # Über Uns
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+Willkommen im **ASCII Café** einem studentisch geführten Café in der Fakultät Informatik der TU Dresden. Bei uns gibt es Snacks, Kalt- und Heißgetränke, sowie Sofas als idealen Ort zum Verweilen und Austauschen mit anderen Studierenden.
 
-## H2 Überschrift
-### H3 Überschrift
-#### H4 Überschrift
-##### H5 Überschrift
-###### H6 Überschrift
+{{< image src="/images/cafe.webp" alt="Tresen des ascii Cafés" >}}
 
-## Listen
+## Werde Mitglied
 
-- Ungeordnete Liste Punkt 1
-- Ungeordnete Liste Punkt 2
-  - Unterpunkt 2.1
-  - Unterpunkt 2.2
+Möchtest du Teil eines bunten Haufens werden und die Campus-Community bereichern? Bei uns kannst du nicht nur Kaffee brauen, sondern auch neue Freundschaften knüpfen, Events organisieren und Teil eines lebendigen Netzwerks sein.
 
-1. Geordnete Liste Punkt 1
-2. Geordnete Liste Punkt 2
-   1. Unterpunkt 2.1
-   2. Unterpunkt 2.2
+## So erreichst du uns
 
-## Tabelle
+- **Ort:** Andreas-Pfitzmann-Bau, Raum E016
+- **Öffnungszeiten:** Montag bis Freitag, 09:00 – 17:00 Uhr | Samstag: 09:00 – 15:00 Uhr
+- **Kontakt:** [info@ascii-dresden.de](mailto:info@ascii-dresden.de)
 
-| Name             | Alter | Beruf          |
-|------------------|-------|----------------|
-| Max Mustermann   | 30    | Entwickler     |
-| Erika Musterfrau | 28    | Designerin     |
-| John Doe         | 35    | Projektmanager |
-
-## Links
-
-[Webseite](https://example.com)
-
-## Bilder
-
-![Beispielbild](https://placehold.co/600x400)
-
-## Zitate
-
-> Dies ist ein Blockzitat.
-
-## Fett und Kursiv
-
-**Fettgedruckt** und *kursiv* sowie ***beides***.
-
-## Horizontale Linie
-
----
+Wir freuen uns auf deinen Besuch und darauf, gemeinsam die ASCII-Welt zu gestalten!
