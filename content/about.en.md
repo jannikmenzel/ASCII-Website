@@ -18,7 +18,7 @@ Do you want to become part of a vibrant group and enrich the campus community? H
 ## How to Reach Us
 
 - **Location:** Andreas-Pfitzmann-Bau, Room E016
-- **Opening Hours:** Monday to Friday, 09:00 – 17:00 | Saturday: 09:00 – 15:00
+- **Opening Hours:** Monday to Friday, 09:00 – 16:00
 - **Contact:** [info@ascii-dresden.de](mailto:info@ascii-dresden.de)
 
 We look forward to your visit and to shaping the ASCII world together!

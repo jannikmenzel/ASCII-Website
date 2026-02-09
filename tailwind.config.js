@@ -12,9 +12,11 @@ module.exports = {
                 'terminal-bg': 'rgba(255, 255, 255, 0.4)',
             },
             fontFamily: {
+                title: ["'Bagel Fat One'", 'sans-serif'],
                 display: ['JetBrains Mono', 'monospace'],
                 mono: ['JetBrains Mono', 'monospace'],
-                sans: ['Inter', 'sans-serif'],
+                sans: ['Roboto', 'sans-serif'],
+                huge: ['Inter', 'sans-serif'],
             },
         },
     }

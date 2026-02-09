@@ -3,7 +3,7 @@
         <div class="flex items-center justify-between h-16 md:h-20">
             <div class="flex items-center">
                 <a href="{{ if eq .Site.Language.Lang "en" }}/en{{ else }}/{{ end }}">
-                    {{ with resources.Get "icons/logo.svg" }}
+                    {{ with resources.Get "icons/ascii.svg" }}
                         <img src="{{ .RelPermalink }}" alt="ASCII Café Logo" class="h-8 w-auto">
                     {{ end }}
                 </a>
@@ -14,15 +14,15 @@
                 {{ $navItems := slice }}
 
                 {{ if eq .Site.Language.Lang "en" }}
-                    {{ $navItems = $navItems | append (dict "name" "Home" "url" "/en/") }}
                     {{ $navItems = $navItems | append (dict "name" "About" "url" "/en/about") }}
-                    {{ $navItems = $navItems | append (dict "name" "Menu" "url" "/en/menu") }}
                     {{ $navItems = $navItems | append (dict "name" "News" "url" "/en/news") }}
+                    {{ $navItems = $navItems | append (dict "name" "Angebot" "url" "/en/menu") }}
+                    {{ $navItems = $navItems | append (dict "name" "Caterings" "url" "/en/caterings") }}
                 {{ else }}
-                    {{ $navItems = $navItems | append (dict "name" "Home" "url" "/") }}
                     {{ $navItems = $navItems | append (dict "name" "Über uns" "url" "/about") }}
-                    {{ $navItems = $navItems | append (dict "name" "Menü" "url" "/menu") }}
                     {{ $navItems = $navItems | append (dict "name" "News" "url" "/news") }}
+                    {{ $navItems = $navItems | append (dict "name" "Angebot" "url" "/menu") }}
+                    {{ $navItems = $navItems | append (dict "name" "Caterings" "url" "/caterings") }}
                 {{ end }}
 
                 {{ range $navItems }}
@@ -35,10 +35,13 @@
             </div>
 
             <div class="flex items-center">
-                <a class="hidden lg:inline-flex btn-primary text-sm"
-                   href="{{ if eq .Site.Language.Lang "en" }}/en/about{{ else }}/about{{ end }}">
-                    {{ if eq .Site.Language.Lang "en" }}Learn more{{ else }}Mehr erfahren{{ end }}
-                </a>
+                <output id="opening-status-desktop"
+                        class="text-sm items-center gap-4 font-mono tracking-widest uppercase px-6 justify-center w-full py-3 rounded-lg font-medium hidden lg:flex"
+                        aria-live="polite"
+                        data-open-text="{{ if eq .Site.Language.Lang "en" }}Open{{ else }}Geöffnet{{ end }}"
+                        data-closed-text="{{ if eq .Site.Language.Lang "en" }}Closed{{ else }}Geschlossen{{ end }}">
+                    <span id="opening-text-desktop"></span>
+                </output>
 
                 <button class="lg:hidden p-2 text-secondary hover:text-primary"
                         id="mobile-menu-button"
@@ -62,17 +65,35 @@
                 {{ end }}
 
                 <div class="px-4 pt-4 border-t border-primary/10">
-                    <a class="block w-full text-center btn-primary text-sm py-3"
-                       href="{{ if eq .Site.Language.Lang "en" }}/en/about{{ else }}/about{{ end }}">
-                        {{ if eq .Site.Language.Lang "en" }}Learn more{{ else }}Mehr erfahren{{ end }}
-                    </a>
+                    <output id="opening-status-mobile"
+                            class="text-sm inline-flex items-center gap-4 font-mono tracking-widest uppercase px-6 justify-center w-full py-3 rounded-lg font-medium"
+                            aria-live="polite"
+                            data-open-text="{{ if eq .Site.Language.Lang "en" }}Open{{ else }}Geöffnet{{ end }}"
+                            data-closed-text="{{ if eq .Site.Language.Lang "en" }}Closed{{ else }}Geschlossen{{ end }}">
+                        <span id="opening-text-mobile"></span>
+                    </output>
                 </div>
             </div>
         </div>
     </div>
 </nav>
-
 <script>
+    function applyStatus(el, isOpen) {
+        if (!el) return;
+        const openText = el.dataset.openText || 'Geöffnet';
+        const closedText = el.dataset.closedText || 'Geschlossen';
+        const textEl = el.querySelector('[id^="opening-text-"]') || el;
+
+        el.classList.remove('text-green-500', 'bg-green-500/10', 'text-red-500', 'bg-red-500/10');
+        if (isOpen) {
+            el.classList.add('text-green-500', 'bg-green-500/10');
+            if (textEl) textEl.textContent = openText;
+        } else {
+            el.classList.add('text-red-500', 'bg-red-500/10');
+            if (textEl) textEl.textContent = closedText;
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
@@ -126,5 +147,30 @@
 
     // Ensure initial icon state
     setIcon(isOpen);
+
+    function checkIsOpenNow() {
+        const now = new Date();
+        const day = now.getDay();
+        const hour = now.getHours();
+        // Open Mo-Fri 09:00-15:59
+        return day >= 1 && day <= 5 && hour >= 9 && hour < 16;
+    }
+
+    function updateOpeningStatus() {
+        const desktop = document.getElementById('opening-status-desktop');
+        const mobile = document.getElementById('opening-status-mobile');
+        const isOpen = checkIsOpenNow();
+        applyStatus(desktop, isOpen);
+        applyStatus(mobile, isOpen);
+    }
+
+    updateOpeningStatus();
+
+    const now = new Date();
+    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+    setTimeout(function () {
+        updateOpeningStatus();
+        setInterval(updateOpeningStatus, 60 * 1000);
+    }, msToNextMinute);
     });
 </script>

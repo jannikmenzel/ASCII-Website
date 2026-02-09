@@ -5,7 +5,7 @@
 {{ $link := $event.RelPermalink }}
 
 <article
-        class="bg-white rounded-lg overflow-hidden shadow-lg border border-primary/10 flex flex-col {{ $responsiveClass }}">
+        class="bg-background-light rounded-lg overflow-hidden shadow-lg border border-primary/10 flex flex-col {{ $responsiveClass }}">
     <a href="{{ $link }}" class="h-48 sm:h-52 md:h-60 overflow-hidden block">
         {{ partial "image.html" (dict "src" $event.Params.image "alt" $event.Title "class" "w-full h-full object-cover hover:scale-105 transition-transform duration-300") }}
     </a>

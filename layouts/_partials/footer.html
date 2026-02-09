@@ -10,13 +10,15 @@
                         <span class="font-medium">
                             {{ if eq .Site.Language.Lang "en" }}Monday – Friday{{ else }}Montag – Freitag{{ end }}:
                         </span>
-                        <span class="ml-2">09:00–17:00</span>
+                        <span class="ml-2">09:00–16:00</span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="font-medium">
                             {{ if eq .Site.Language.Lang "en" }}Saturday{{ else }}Samstag{{ end }}:
                         </span>
-                        <span class="ml-2">09:00–15:00</span>
+                        <span class="ml-2 font-mono text-xs">
+                            {{ if eq .Site.Language.Lang "en" }}CLOSED{{ else }}GESCHLOSSEN{{ end }}
+                        </span>
                     </div>
                     <div class="flex justify-between items-center">
                         <span class="font-medium">

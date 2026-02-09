@@ -18,7 +18,7 @@ Möchtest du Teil eines bunten Haufens werden und die Campus-Community bereicher
 ## So erreichst du uns
 
 - **Ort:** Andreas-Pfitzmann-Bau, Raum E016
-- **Öffnungszeiten:** Montag bis Freitag, 09:00 – 17:00 Uhr | Samstag: 09:00 – 15:00 Uhr
+- **Öffnungszeiten:** Montag bis Freitag, 09:00 – 16:00 Uhr
 - **Kontakt:** [info@ascii-dresden.de](mailto:info@ascii-dresden.de)
 
 Wir freuen uns auf deinen Besuch und darauf, gemeinsam die ASCII-Welt zu gestalten!
