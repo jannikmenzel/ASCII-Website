@@ -16,7 +16,7 @@
                 {{ if eq .Site.Language.Lang "en" }}
                     {{ $navItems = $navItems | append (dict "name" "About" "url" "/en/about") }}
                     {{ $navItems = $navItems | append (dict "name" "News" "url" "/en/news") }}
-                    {{ $navItems = $navItems | append (dict "name" "Angebot" "url" "/en/menu") }}
+                    {{ $navItems = $navItems | append (dict "name" "Menu" "url" "/en/menu") }}
                     {{ $navItems = $navItems | append (dict "name" "Caterings" "url" "/en/caterings") }}
                 {{ else }}
                     {{ $navItems = $navItems | append (dict "name" "Über uns" "url" "/about") }}
