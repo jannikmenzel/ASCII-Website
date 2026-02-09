@@ -112,13 +112,100 @@ hugo
 - Tailwind: Passe `tailwind.config.js` an (Farben, Font-Families, Content Pfade).
 - PostCSS: `postcss.config.js` steuert die Pipeline; `HUGO_ENVIRONMENT` aktiviert `autoprefixer`.
 
-## Features
+## Maintaining
 
-- Mehrsprachigkeit (DE / EN) mit Hugo i18n.
-- Schnelle Ladezeiten durch statische Generierung.
-- Modernes Utility-First Styling mit Tailwind CSS.
-- Saubere SEO-Basics (Meta-Tags, strukturierte Inhalte).
-- Hohe Lighthouse-Scores (Performance, Accessibility, SEO).
+Diese Sektion beschreibt, wie du die Website pflegst und Inhalte aktualisierst (Blog-Artikel, Metadaten, Bilder, Menü, etc.).
+
+### 1) Blog-Artikel erstellen / aktualisieren
+
+- Der Content liegt unter `content/posts/` und ist zweisprachig: es gibt je Artikel separate Dateien für Deutsch und Englisch (z. B. `post-1.de.md` und `post-1.en.md`).
+- Neue Artikel anlegen: Erstelle zwei Dateien (de + en) mit entsprechendem Front Matter. Beispiel-FrontMatter (YAML):
+
+```yaml
+---
+title: "Mein Artikel"
+tag: "POST"
+tagColor: "bg-red-100 text-red-800"
+date: "2026-01-01"
+slug: "mein-artikel"
+image: "images/mein-artikel.jpg"
+description: "Kurzbeschreibung"
+draft: false
+layout: post
+---
+```
+
+- Wichtige Felder: `title`, `date`, `description` (für SEO), `slug` (URL), `tag`, `draft` (true = nicht veröffentlichen), `image` (Pfad zu Bild in `assets/images` oder `static/images`).
+
+### 2) Metadaten und Site-Konfiguration
+
+- Site-weite Einstellungen (z. B. Titel, Sprache, Params) sind in `hugo.toml` konfiguriert.
+- SEO-Meta-Texte: Falls du Meta-Texte global anpassen willst, bearbeite die Partial `layouts/_partials/seo.html` oder die einzelnen Seiten-Front-Matters.
+
+### 3) Bilder verwalten
+
+- Originale / Quelldateien: Lege größere Originalbilder in `assets/images/` (wird von Hugo/Resources verarbeitet) oder in `static/images/` wenn du sie unverändert ausliefern möchtest.
+- Naming & Pfade: Verwende sprechende, kleingeschriebene Dateinamen ohne Leerzeichen, z. B. `mein-artikel-hero.jpg`.
+- Optimierung: Wenn möglich, lade optimierte WebP/AVIF-Versionen hoch oder nutze die Optimierung durch
+
+`{{< image src="/images/..." alt="Alt Text" >}}` in **Markdown**
+
+`{{ partial "image.html" (dict "src" /images/... "alt" Alt Text "class" "w-full") }}` in **HTML**
+
+### 4) Lokales Testen
+
+- Node-Dependencies installieren (einmalig):
+
+```bash
+npm install
+```
+
+- Hugo-Dev-Server starten:
+
+```bash
+hugo server --disableFastRender --ignoreCache --noHTTPCache --cleanDestinationDir
+```
+
+- Vorschau prüfen: Öffne `http://localhost:1313/` und kontrolliere Artikel, Bildpfade, Meta-Tags und Sprachwechsel.
+
+### 5) Production Build
+
+- Hugo bauen:
+
+```bash
+hugo
+# Die fertige Site liegt in `public/`
+```
+
+### 6) Deployment & Git-Workflow
+
+- Branch-Workflow: Erstelle einen Feature-Branch (`feature/add-article`), committe Änderungen und öffne einen Pull Request.
+- Commit-Nachricht: Kurz und prägnant, z. B. `feat(blog): add article "Mein Artikel" (de/en)`.
+- Vor dem Merge: Lokale Vorschau prüfen und optional automatisierte Checks/CI (z. B. Lighthouse) laufen lassen.
+
+### 7) Abhängigkeiten aktualisieren
+
+- Node-Pakete aktualisieren:
+
+```bash
+npm update
+npm audit fix
+```
+
+- Hugo-Version prüfen/aktualisieren (je nach Distribution, z. B. Homebrew):
+
+```bash
+brew upgrade hugo
+```
+
+### 8) Quick-Checklist vor jedem Deploy
+
+- [ ] Alle Artikel nicht auf `draft: true` gesetzt, falls veröffentlicht.
+- [ ] Bilder korrekt verlinkt und optimiert.
+- [ ] Lokaler Build ohne Fehler (`hugo`), CSS vorhanden (`static/css/main.css`).
+- [ ] Übersetzungen (`.de.md` / `.en.md`) synchron.
+
+---
 
 ## Contribution
 
