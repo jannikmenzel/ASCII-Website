@@ -17,10 +17,6 @@ Nöthnitzer Strasse 46
 
 - info@ascii-dresden.de
 
-**Phone**
-
-- +49 351 46342221
-
 **GitHub**
 
 - ascii-dresden

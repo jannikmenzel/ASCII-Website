@@ -15,11 +15,7 @@ Nöthnitzer Strasse 46
 
 **E-Mail-Adresse**
 
-- info@ascii-dresden.de  
-
-**Telefonnummer**
-
-- +49 351 46342221  
+- info@ascii-dresden.de
 
 **GitHub**
 
