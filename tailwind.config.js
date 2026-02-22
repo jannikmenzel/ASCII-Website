@@ -20,6 +20,7 @@ module.exports = {
             },
             fontFamily: {
                 title: ["'Bagel Fat One'", 'sans-serif'],
+                subtitle: ["'Sniglet', 'sans-serif'"],
                 display: ['JetBrains Mono', 'monospace'],
                 mono: ['JetBrains Mono', 'monospace'],
                 sans: ['Roboto', 'sans-serif'],

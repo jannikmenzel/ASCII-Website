@@ -9,13 +9,11 @@
                     </h1>
                 </div>
 
-                <p class="text-secondary leading-relaxed text-lg md:text-xl md:pl-4 md:border-l-2 md:border-amber-400/50">
+                <p class="font-subtitle text-secondary leading-relaxed text-lg md:text-xl md:pl-4 md:border-l-2 md:border-amber-400/50">
                     {{ if eq .Language.Lang "en" }}
-                        Without you, we're like <span class="font-medium text-primary">coffee</span> without
-                        <span class="font-medium text-primary">beans</span>
+                        Your student-run café <span class="font-medium text-primary">ASCII Dresden e.V.</span> in the Faculty of Computer Science at the Technical University of Dresden.
                     {{ else }}
-                        Ohne dich sind wir wie <span class="font-medium text-primary">Kaffee</span> ohne
-                        <span class="font-medium text-primary">Bohnen</span>
+                        Dein studentisch geführtes Café <span class="font-medium text-primary">ASCII Dresden e.V.</span> in der Informatik Fakultät der Technischen Universität Dresden.
                     {{ end }}
                 </p>
 
@@ -46,7 +44,7 @@
                         <div class="text-left">
                             <p class="font-medium text-primary">WiFi</p>
                             <p class="text-xs">
-                                {{ if eq .Language.Lang "en" }}Free Eduroam{{ else }}Gratis Eduroam{{ end }}
+                                {{ if eq .Language.Lang "en" }}Eduroam{{ else }}Eduroam{{ end }}
                             </p>
                         </div>
                     </div>

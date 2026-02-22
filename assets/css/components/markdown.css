@@ -14,7 +14,7 @@
 }
 
 #markdown h1 {
-    @apply font-display text-2xl sm:text-3xl md:text-4xl mb-4;
+    @apply font-title text-2xl sm:text-3xl md:text-4xl mb-4;
 }
 
 #markdown.title-center {

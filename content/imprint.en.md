@@ -8,10 +8,10 @@ description: "Legal notice and contact details for ASCII Dresden student café."
 
 **Address**
 
-- Studentencafé ASCII
-- Andreas-Pfitzmann-Bau, Raum E016
-- Nöthnitzer Strasse 46
-- 01187 Dresden
+Studentencafé ASCII
+Andreas-Pfitzmann-Bau, Raum E016
+Nöthnitzer Strasse 46
+01187 Dresden
 
 **Email**
 

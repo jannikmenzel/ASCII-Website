@@ -11,9 +11,9 @@ Willkommen im **ASCII Café** einem studentisch geführten Café in der Fakultä
 
 {{< image src="/images/cafe.webp" alt="Tresen des ascii Cafés" >}}
 
-## Werde Mitglied
+## Ohne Dich sind wir wie Kaffee ohne Bohnen :(
 
-Möchtest du Teil eines bunten Haufens werden und die Campus-Community bereichern? Bei uns kannst du nicht nur Kaffee brauen, sondern auch neue Freundschaften knüpfen, Events organisieren und Teil eines lebendigen Netzwerks sein.
+Möchtest du Teil eines bunten Haufens werden und unseren Campus mit Coffein und Limos zu studentischen fairen Preisen versorgen? Werde Mitglied bei uns :)? Bei uns kannst du nicht nur Kaffee kochen, sondern auch neue Freundschaften knüpfen, Events organisieren und während deiner Schicht kostenlos Getränke schlürfen.
 
 ## So erreichst du uns
 
@@ -21,4 +21,6 @@ Möchtest du Teil eines bunten Haufens werden und die Campus-Community bereicher
 - **Öffnungszeiten:** Montag bis Freitag, 09:00 – 16:00 Uhr
 - **Kontakt:** [info@ascii-dresden.de](mailto:info@ascii-dresden.de)
 
-Wir freuen uns auf deinen Besuch und darauf, gemeinsam die ASCII-Welt zu gestalten!
+Wir freuen uns auf deinen Besuch und darauf, gemeinsam das ASCII mitzugestalten!
+
+## Unsere Geschichte
