@@ -1,0 +1,44 @@
+{{ $langParam := .Get "lang" }}
+{{ $lang := cond (ne $langParam "") $langParam .Page.Lang }}
+{{ $key := (printf "history_%s" $lang) }}
+
+{{ with site.Data.history }}
+    {{ $items := index . $key }}
+    <div class="relative my-8">
+        <div class="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-secondary rounded hidden md:block"></div>
+
+        <div class="space-y-8">
+            {{ range $i, $el := $items }}
+                {{ $isLeft := eq (mod $i 2) 0 }}
+                <div class="relative flex flex-col md:flex-row items-start md:items-center">
+
+                    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 hidden md:flex">
+                        <div class="flex items-center justify-center w-8 h-8 bg-primary text-paper-light rounded-full ring-4 ring-background-light/20"></div>
+                    </div>
+
+                    {{ if $isLeft }}
+                        <div class="md:w-1/2 md:pr-8 md:text-right">
+                            <div class="inline-block bg-background-light/60 p-4 rounded-lg shadow-sm w-full md:inline-block">
+                                <div class="text-sm text-secondary font-mono">{{ $el.date }}</div>
+                                <div class="text-lg font-semibold text-text-main mt-1">{{ $el.title }}</div>
+                                <div class="text-sm text-text-main mt-2">{{ $el.description }}</div>
+                            </div>
+                        </div>
+                        <div class="md:w-1/2 md:pl-8 md:flex md:justify-center md:items-center"></div>
+                    {{ else }}
+                        <div class="md:w-1/2 md:pr-8 md:flex md:justify-center md:items-center"></div>
+                        <div class="md:w-1/2 md:pl-8">
+                            <div class="inline-block bg-background-light/60 p-4 rounded-lg shadow-sm w-full">
+                                <div class="text-sm text-secondary font-mono">{{ $el.date }}</div>
+                                <div class="text-lg font-semibold text-text-main mt-1">{{ $el.title }}</div>
+                                <div class="text-sm text-text-main mt-2">{{ $el.description }}</div>
+                            </div>
+                        </div>
+                    {{ end }}
+                </div>
+            {{ end }}
+        </div>
+    </div>
+{{ else }}
+    <p class="text-sm text-neutral-500"><em>History data not found.</em></p>
+{{ end }}

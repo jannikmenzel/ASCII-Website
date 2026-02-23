@@ -27,3 +27,5 @@ knüpfen, Events organisieren und während deiner Schicht kostenlos Getränke sc
 Wir freuen uns auf deinen Besuch und darauf, gemeinsam das ASCII mitzugestalten!
 
 ## Unsere Geschichte
+
+{{< timeline lang="de" >}}
