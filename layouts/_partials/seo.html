@@ -1,7 +1,8 @@
 <!-- SEO -->
 <meta name="keywords"
       content="ASCII Dresden, Studentencafé Dresden, Café TU Dresden, Studenten Café Dresden, Kaffee Dresden, Lerncafé Dresden, Hochschulcafé Dresden, Studenten Treffpunkt, Dresden Café, Study Café Dresden, Kaffee trinken Dresden">
-<meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}ASCII Dresden – Das studentische Café an der TU Dresden.{{ end }}">
+<meta name="description"
+      content="{{ with .Params.description }}{{ . }}{{ else }}ASCII Dresden – Das studentische Café an der TU Dresden.{{ end }}">
 <meta name="robots" content="index, follow">
 
 <script type="application/ld+json">
@@ -32,13 +33,21 @@
         "openingHoursSpecification": [
             {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday"],
+                "dayOfWeek": [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday"
+                ],
                 "opens": "09:00",
                 "closes": "17:00"
             },
             {
                 "@type": "OpeningHoursSpecification",
-                "dayOfWeek": ["Saturday"],
+                "dayOfWeek": [
+                    "Saturday"
+                ],
                 "opens": "09:00",
                 "closes": "15:00"
             }
@@ -52,7 +61,8 @@
 
 <!-- Open Graph -->
 <meta property="og:title" content="ASCII Dresden – Studentencafé an der TU Dresden"/>
-<meta property="og:description" content="Lernen, Austauschen und Kaffeetrinken im studentischen Café ASCII Dresden. Perfekt für Studenten der TU Dresden und Lernende in Dresden."/>
+<meta property="og:description"
+      content="Lernen, Austauschen und Kaffeetrinken im studentischen Café ASCII Dresden. Perfekt für Studenten der TU Dresden und Lernende in Dresden."/>
 <meta property="og:type" content="website"/>
 <meta property="og:url" content="https://ascii-dresden.de"/>
 <meta property="og:image" content="https://ascii.jannikmenzel.me/social-preview.png"/>

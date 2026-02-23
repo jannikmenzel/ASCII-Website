@@ -11,7 +11,7 @@ description: "Rechtliche Angaben und Kontaktinformationen des studentischen Caf�
 Studentencafé ASCII  
 Andreas-Pfitzmann-Bau, Raum E016  
 Nöthnitzer Strasse 46  
-01187 Dresden  
+01187 Dresden
 
 **E-Mail-Adresse**
 
@@ -19,7 +19,7 @@ Nöthnitzer Strasse 46
 
 **GitHub**
 
-- ascii-dresden  
+- ascii-dresden
 
 **Instagram**
 

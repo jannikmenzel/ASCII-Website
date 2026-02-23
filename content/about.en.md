@@ -7,13 +7,15 @@ description: "About ASCII Café at TU Dresden — who we are, what we do, and ho
 
 # About Us
 
-Welcome to **ASCII Café**, a student-run café at the Faculty of Computer Science at TU Dresden. We offer snacks, hot and cold drinks, and cozy sofas — the perfect place to relax and connect with other students.
+Welcome to **ASCII Café**, a student-run café at the Faculty of Computer Science at TU Dresden. We offer snacks, hot and
+cold drinks, and cozy sofas — the perfect place to relax and connect with other students.
 
 {{< image src="/images/cafe.webp" alt="Counter of ascii Cafés" >}}
 
 ## Join Us
 
-Do you want to become part of a vibrant group and enrich the campus community? Here, you can not only brew coffee but also make new friends, organize events, and be part of a lively network.
+Do you want to become part of a vibrant group and enrich the campus community? Here, you can not only brew coffee but
+also make new friends, organize events, and be part of a lively network.
 
 ## How to Reach Us
 

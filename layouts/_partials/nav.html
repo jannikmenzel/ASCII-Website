@@ -98,79 +98,79 @@
         const menuButton = document.getElementById('mobile-menu-button');
         const mobileMenu = document.getElementById('mobile-menu');
 
-    if (!menuButton || !mobileMenu) return;
+        if (!menuButton || !mobileMenu) return;
 
-    let isOpen = !mobileMenu.classList.contains('hidden');
-    const path = menuButton.querySelector('path');
+        let isOpen = !mobileMenu.classList.contains('hidden');
+        const path = menuButton.querySelector('path');
 
-    const HAMBURGER = 'M4 6h16M4 12h16M4 18h16';
-    const CLOSE = 'M6 18L18 6M6 6l12 12';
+        const HAMBURGER = 'M4 6h16M4 12h16M4 18h16';
+        const CLOSE = 'M6 18L18 6M6 6l12 12';
 
-    function setIcon(open) {
-        if (!path) return;
-        path.setAttribute('d', open ? CLOSE : HAMBURGER);
-    }
-
-    function openMenu() {
-        mobileMenu.classList.remove('hidden');
-        menuButton.setAttribute('aria-expanded', 'true');
-        isOpen = true;
-        setIcon(true);
-                }
-
-    function closeMenu() {
-                    mobileMenu.classList.add('hidden');
-        menuButton.setAttribute('aria-expanded', 'false');
-        isOpen = false;
-        setIcon(false);
-                }
-
-    // Toggle on button click (stopPropagation to avoid immediate document handler)
-    menuButton.addEventListener('click', function (e) {
-        e.stopPropagation();
-        isOpen ? closeMenu() : openMenu();
-            });
-
-    // Close when clicking outside (use closest for cheap checks)
-    document.addEventListener('click', function (e) {
-        if (!e.target || (e.target instanceof Node && !e.target.closest('#mobile-menu') && !e.target.closest('#mobile-menu-button'))) {
-            closeMenu();
+        function setIcon(open) {
+            if (!path) return;
+            path.setAttribute('d', open ? CLOSE : HAMBURGER);
         }
-    }, { passive: true });
 
-    // Delegate link clicks inside the mobile menu to a single handler
-    mobileMenu.addEventListener('click', function (e) {
-        if (e.target && e.target.closest && e.target.closest('a')) {
-            closeMenu();
+        function openMenu() {
+            mobileMenu.classList.remove('hidden');
+            menuButton.setAttribute('aria-expanded', 'true');
+            isOpen = true;
+            setIcon(true);
         }
-                });
 
-    // Ensure initial icon state
-    setIcon(isOpen);
+        function closeMenu() {
+            mobileMenu.classList.add('hidden');
+            menuButton.setAttribute('aria-expanded', 'false');
+            isOpen = false;
+            setIcon(false);
+        }
 
-    function checkIsOpenNow() {
-        const now = new Date();
-        const day = now.getDay();
-        const hour = now.getHours();
-        // Open Mo-Fri 09:00-15:59
-        return day >= 1 && day <= 5 && hour >= 9 && hour < 16;
-    }
+        // Toggle on button click (stopPropagation to avoid immediate document handler)
+        menuButton.addEventListener('click', function (e) {
+            e.stopPropagation();
+            isOpen ? closeMenu() : openMenu();
+        });
 
-    function updateOpeningStatus() {
-        const desktop = document.getElementById('opening-status-desktop');
-        const mobile = document.getElementById('opening-status-mobile');
-        const isOpen = checkIsOpenNow();
-        applyStatus(desktop, isOpen);
-        applyStatus(mobile, isOpen);
-    }
+        // Close when clicking outside (use closest for cheap checks)
+        document.addEventListener('click', function (e) {
+            if (!e.target || (e.target instanceof Node && !e.target.closest('#mobile-menu') && !e.target.closest('#mobile-menu-button'))) {
+                closeMenu();
+            }
+        }, {passive: true});
 
-    updateOpeningStatus();
+        // Delegate link clicks inside the mobile menu to a single handler
+        mobileMenu.addEventListener('click', function (e) {
+            if (e.target && e.target.closest && e.target.closest('a')) {
+                closeMenu();
+            }
+        });
 
-    const now = new Date();
-    const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
-    setTimeout(function () {
+        // Ensure initial icon state
+        setIcon(isOpen);
+
+        function checkIsOpenNow() {
+            const now = new Date();
+            const day = now.getDay();
+            const hour = now.getHours();
+            // Open Mo-Fri 09:00-15:59
+            return day >= 1 && day <= 5 && hour >= 9 && hour < 16;
+        }
+
+        function updateOpeningStatus() {
+            const desktop = document.getElementById('opening-status-desktop');
+            const mobile = document.getElementById('opening-status-mobile');
+            const isOpen = checkIsOpenNow();
+            applyStatus(desktop, isOpen);
+            applyStatus(mobile, isOpen);
+        }
+
         updateOpeningStatus();
-        setInterval(updateOpeningStatus, 60 * 1000);
-    }, msToNextMinute);
+
+        const now = new Date();
+        const msToNextMinute = (60 - now.getSeconds()) * 1000 - now.getMilliseconds();
+        setTimeout(function () {
+            updateOpeningStatus();
+            setInterval(updateOpeningStatus, 60 * 1000);
+        }, msToNextMinute);
     });
 </script>

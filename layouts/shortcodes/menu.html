@@ -1,0 +1,56 @@
+{{ $langParam := .Get "lang" }}
+{{ $lang := cond (ne $langParam "") $langParam .Page.Lang }}
+{{ $drinksKey := (printf "drinks_%s" $lang) }}
+{{ $snacksKey := (printf "snacks_%s" $lang) }}
+
+{{ with site.Data.menu }}
+
+    <div class="bg-text-main text-paper-light p-6 rounded-lg shadow-inner ring-1 ring-black/20">
+        <!-- Drinks section -->
+        <section class="mb-6">
+            <h2 class="text-xl font-semibold border-b-2 border-dashed border-background-light/60 pb-2 mb-4">
+                <span class="text-background-light">
+                    {{ if eq $lang "de" }}Getränke{{ else }}Drinks{{ end }}
+                </span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {{ range index . $drinksKey }}
+                    <div class="flex justify-between items-start bg-background-light/5 p-3 rounded-md shadow-sm">
+                        <div class="min-w-0">
+                            <div class="font-semibold text-background-light truncate">{{ .name }}</div>
+                            {{ if .description }}
+                                <div class="text-sm text-paper-light mt-1">{{ .description }}</div>{{ end }}
+                        </div>
+                        <div class="ml-4 text-right font-mono text-paper-light/60">{{ .price }}</div>
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+
+        <!-- Snacks section -->
+        <section>
+            <h2 class="text-xl font-semibold border-b-2 border-dashed border-background-light/60 pb-2 mb-4">
+                <span class="text-background-light">
+                    {{ if eq $lang "de" }}Snacks{{ else }}Snacks{{ end }}
+                </span>
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {{ range index . $snacksKey }}
+                    <div class="flex justify-between items-start bg-background-light/5 p-3 rounded-md shadow-sm">
+                        <div class="min-w-0">
+                            <div class="font-semibold text-background-light truncate">{{ .name }}</div>
+                            {{ if .description }}
+                                <div class="text-sm text-paper-light mt-1">{{ .description }}</div>{{ end }}
+                        </div>
+                        <div class="ml-4 text-right font-mono text-paper-light/60">{{ .price }}</div>
+                    </div>
+                {{ end }}
+            </div>
+        </section>
+    </div>
+
+{{ else }}
+    <p class="text-sm text-neutral-500"><em>Menu data not found.</em></p>
+{{ end }}

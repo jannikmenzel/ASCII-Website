@@ -26,17 +26,17 @@
 
 <picture>
     <source
-        type="image/webp"
-        srcset="{{ $webpSrcset }}"
-        sizes="(max-width: 600px) 100vw, 50vw"
+            type="image/webp"
+            srcset="{{ $webpSrcset }}"
+            sizes="(max-width: 600px) 100vw, 50vw"
     >
     <img
-        src="{{ $largest.RelPermalink }}"
-        alt="{{ $alt }}"
-        class="max-w-full h-auto {{ $class }}"
-        loading="lazy"
-        decoding="async"
-        width="{{ $largest.Width }}"
-        height="{{ $largest.Height }}"
+            src="{{ $largest.RelPermalink }}"
+            alt="{{ $alt }}"
+            class="max-w-full h-auto {{ $class }}"
+            loading="lazy"
+            decoding="async"
+            width="{{ $largest.Width }}"
+            height="{{ $largest.Height }}"
     />
 </picture>
