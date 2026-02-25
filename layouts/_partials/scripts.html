@@ -21,3 +21,10 @@
         }
     </script>
 {{ end }}
+
+{{ $carousel := resources.Get "js/carousel.js" }}
+{{ if $carousel }}
+    {{ $carousel = $carousel | resources.Minify | resources.Fingerprint }}
+    <script src="{{ $carousel.RelPermalink }}" integrity="{{ $carousel.Data.Integrity }}" crossorigin="anonymous"
+            defer></script>
+{{ end }}
