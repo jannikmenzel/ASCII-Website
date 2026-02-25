@@ -99,7 +99,7 @@ hugo
   - `assets/icons/`, `assets/images/` — statische Medien.
 - `content/` — Seiten und Posts (`de` / `en`).
 - `layouts/` — Hugo-Layouts und Partials.
-- `data/menu.json` — strukturierte Daten für Menü.
+- `data/` — strukturierte Daten für Timeline und Menü.
 - `hugo.toml` — Hugo-Konfiguration (Sprache, Module, Build-Optionen).
 - `package.json` — Node devDependencies (Tailwind, PostCSS).
 - `static/` — statische Dateien (Dokumente, Bilder).
@@ -152,38 +152,13 @@ layout: post
 
 `{{ partial "image.html" (dict "src" /images/... "alt" Alt Text "class" "w-full") }}` in **HTML**
 
-### 4) Lokales Testen
-
-- Node-Dependencies installieren (einmalig):
-
-```bash
-npm install
-```
-
-- Hugo-Dev-Server starten:
-
-```bash
-hugo server --disableFastRender --ignoreCache --noHTTPCache --cleanDestinationDir
-```
-
-- Vorschau prüfen: Öffne `http://localhost:1313/` und kontrolliere Artikel, Bildpfade, Meta-Tags und Sprachwechsel.
-
-### 5) Production Build
-
-- Hugo bauen:
-
-```bash
-hugo
-# Die fertige Site liegt in `public/`
-```
-
-### 6) Deployment & Git-Workflow
+### 4) Deployment & Git-Workflow
 
 - Branch-Workflow: Erstelle einen Feature-Branch (`feature/add-article`), committe Änderungen und öffne einen Pull Request.
 - Commit-Nachricht: Kurz und prägnant, z. B. `feat(blog): add article "Mein Artikel" (de/en)`.
 - Vor dem Merge: Lokale Vorschau prüfen und optional automatisierte Checks/CI (z. B. Lighthouse) laufen lassen.
 
-### 7) Abhängigkeiten aktualisieren
+### 5) Abhängigkeiten aktualisieren
 
 - Node-Pakete aktualisieren:
 
@@ -198,12 +173,40 @@ npm audit fix
 brew upgrade hugo
 ```
 
-### 8) Quick-Checklist vor jedem Deploy
+### 6) Quick-Checklist vor jedem Deploy
 
 - [ ] Alle Artikel nicht auf `draft: true` gesetzt, falls veröffentlicht.
 - [ ] Bilder korrekt verlinkt und optimiert.
 - [ ] Lokaler Build ohne Fehler (`hugo`), CSS vorhanden (`static/css/main.css`).
 - [ ] Übersetzungen (`.de.md` / `.en.md`) synchron.
+
+### Shortcodes
+
+Das Projekt enthält mehrere Shortcodes unter `layouts/shortcodes/`. Hier eine kurze Erklärung zu jedem Shortcode, welche Parameter sie erwarten und ein Beispiel für die Nutzung:
+
+- `image`
+  - Zweck: Vereinfachtes Einbinden responsiver Bilder; leitet Parameter an die Partial `layouts/_partials/image.html` weiter, die Hugo Resources für responsive Srcsets benutzt.
+  - Wichtige Parameter: `src` (Pfad, z. B. `images/mein-bild.webp`), `alt`, `class` (Tailwind-Klassen).
+  - Beispiel (Markdown): `{{< image src="/images/cafe.webp" alt="Café" class="w-full" >}}`
+
+- `menu`
+  - Zweck: Rendert das Menü (Getränke & Snacks) aus `data/menu.json` in der passenden Sprache.
+  - Wichtige Parameter: `lang` (optional, z. B. `de` oder `en`; default: Seiten-Sprache).
+  - Beispiel: `{{< menu lang="de" >}}` oder einfach `{{< menu >}}` wenn die Seite die richtige Sprache hat.
+
+- `timeline`
+  - Zweck: Zeigt eine History-/Timeline-Ansicht basierend auf `data/history.json` (Schlüssel `history_de` / `history_en`).
+  - Wichtige Parameter: `lang` (optional, überschreibt Seiten-Sprache).
+  - Daten-Einträge können optional ein Feld `image` enthalten (`image: "images/cafe.webp"`), das mobil oberhalb des Textes und auf Desktop als Vorschaubild in der gegenüberliegenden Spalte angezeigt wird.
+  - Beispiel: `{{< timeline lang="de" >}}` (die Daten werden aus `data/history.json` gezogen).
+
+- `carousel`
+  - Zweck: Ein leichtgewichtiges Bild-Carousel mit Controls und optionalem Autoplay (keine externen Bibliotheken).
+  - Wichtige Parameter:
+    - `images`: Komma-separierte Liste von Bildpfaden (z. B. `images/a.webp,images/b.webp`) — die Bilder sollten in `assets/images/` liegen, damit Hugo Resources sie verarbeiten kann.
+    - `autoplay`: Sekunden (z. B. `4`) für automatische Weiterschaltung; `0` = aus.
+    - `class`: Optional zusätzliche Tailwind-Klassen für den Wrapper.
+  - Beispiel: `{{< carousel images="images/cafe.webp,images/getraenke.webp" autoplay="4" class="max-w-3xl mx-auto" >}}`
 
 ---
 

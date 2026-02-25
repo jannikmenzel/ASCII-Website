@@ -200,6 +200,7 @@
       "md:grid-cols-3",
       "md:h-20",
       "md:h-60",
+      "md:hidden",
       "md:inline-block",
       "md:items-center",
       "md:items-end",

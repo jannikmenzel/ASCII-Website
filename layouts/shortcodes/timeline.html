@@ -18,17 +18,48 @@
 
                     {{ if $isLeft }}
                         <div class="md:w-1/2 md:pr-8 md:text-right">
-                            <div class="inline-block bg-background-light/60 p-4 rounded-lg shadow-sm w-full md:inline-block">
+                            {{ if $el.image }}
+                                <div class="mb-3 md:hidden">
+                                    {{ partial "image.html" (dict "src" $el.image "alt" $el.title "class" "w-full h-auto object-cover rounded-lg") }}
+                                </div>
+                            {{ end }}
+
+                            <div class="inline-block p-4 rounded-lg w-full md:inline-block">
                                 <div class="text-sm text-secondary font-mono">{{ $el.date }}</div>
                                 <div class="text-lg font-semibold text-text-main mt-1">{{ $el.title }}</div>
                                 <div class="text-sm text-text-main mt-2">{{ $el.description }}</div>
                             </div>
                         </div>
-                        <div class="md:w-1/2 md:pl-8 md:flex md:justify-center md:items-center"></div>
+
+                        {{ if $el.image }}
+                            <div class="md:w-1/2 md:pl-8 md:justify-center md:items-center hidden md:flex">
+                                <div class="w-full max-w-sm">
+                                    {{ partial "image.html" (dict "src" $el.image "alt" $el.title "class" "w-full h-auto object-cover rounded-lg") }}
+                                </div>
+                            </div>
+                        {{ else }}
+                            <div class="md:w-1/2 md:pl-8 md:flex md:justify-center md:items-center"></div>
+                        {{ end }}
+
                     {{ else }}
-                        <div class="md:w-1/2 md:pr-8 md:flex md:justify-center md:items-center"></div>
+                        {{ if $el.image }}
+                            <div class="md:w-1/2 md:pr-8 md:justify-center md:items-center hidden md:flex">
+                                <div class="w-full max-w-sm">
+                                    {{ partial "image.html" (dict "src" $el.image "alt" $el.title "class" "w-full h-auto object-cover rounded-lg") }}
+                                </div>
+                            </div>
+                        {{ else }}
+                            <div class="md:w-1/2 md:pr-8 md:flex md:justify-center md:items-center"></div>
+                        {{ end }}
+
                         <div class="md:w-1/2 md:pl-8">
-                            <div class="inline-block bg-background-light/60 p-4 rounded-lg shadow-sm w-full">
+                            {{ if $el.image }}
+                                <div class="mb-3 md:hidden">
+                                    {{ partial "image.html" (dict "src" $el.image "alt" $el.title "class" "w-full h-auto object-cover rounded-lg") }}
+                                </div>
+                            {{ end }}
+
+                            <div class="inline-block p-4 rounded-lg w-full">
                                 <div class="text-sm text-secondary font-mono">{{ $el.date }}</div>
                                 <div class="text-lg font-semibold text-text-main mt-1">{{ $el.title }}</div>
                                 <div class="text-sm text-text-main mt-2">{{ $el.description }}</div>

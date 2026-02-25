@@ -3,55 +3,64 @@
     {
       "date": "2015",
       "title": "Gründung",
-      "description": "Das ASCII Café wurde 2015 von Studierenden der Fakultät Informatik gegründet, um einen Treffpunkt für Austausch und Erholung zu schaffen."
+      "description": "Das ASCII Café wurde 2015 von Studierenden der Fakultät Informatik gegründet, um einen Treffpunkt für Austausch und Erholung zu schaffen.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2017",
       "title": "Erweiterung des Angebots",
-      "description": "Das Sortiment wurde um frische Snacks und eine größere Getränkeauswahl erweitert. Außerdem wurden Community-Events eingeführt."
+      "description": "Das Sortiment wurde um frische Snacks und eine größere Getränkeauswahl erweitert. Außerdem wurden Community-Events eingeführt.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2019",
       "title": "Umbau und Renovierung",
-      "description": "Mit Hilfe von Fördermitteln und ehrenamtlichen Helfern wurde der Tresen modernisiert und zusätzliche Sitzplätze geschaffen."
+      "description": "Mit Hilfe von Fördermitteln und ehrenamtlichen Helfern wurde der Tresen modernisiert und zusätzliche Sitzplätze geschaffen.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2022",
       "title": "Digitalisierung",
-      "description": "Ein neues Webauftritt- und Bestellsystem wurde eingeführt, um Kommunikation und Verwaltung zu verbessern."
+      "description": "Ein neues Webauftritt- und Bestellsystem wurde eingeführt, um Kommunikation und Verwaltung zu verbessern.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2025",
       "title": "Community-Aktionen",
-      "description": "Regelmäßige Themenabende und Workshops stärken die Vernetzung mit Studierenden und lokalen Initiativen."
+      "description": "Regelmäßige Themenabende und Workshops stärken die Vernetzung mit Studierenden und lokalen Initiativen.",
+      "image": "images/placeholder.webp"
     }
   ],
   "history_en": [
     {
       "date": "2015",
       "title": "Founding",
-      "description": "The ASCII Café was founded in 2015 by students of the Faculty of Computer Science to create a place for exchange and relaxation."
+      "description": "The ASCII Café was founded in 2015 by students of the Faculty of Computer Science to create a place for exchange and relaxation.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2017",
       "title": "Offer Expanded",
-      "description": "The menu was expanded with fresh snacks and a larger beverage selection. Community events were introduced."
+      "description": "The menu was expanded with fresh snacks and a larger beverage selection. Community events were introduced.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2019",
       "title": "Renovation",
-      "description": "With support from grants and volunteers the counter was modernized and additional seating was added."
+      "description": "With support from grants and volunteers the counter was modernized and additional seating was added.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2022",
       "title": "Digitalization",
-      "description": "A new website and ordering system were implemented to improve communication and management."
+      "description": "A new website and ordering system were implemented to improve communication and management.",
+      "image": "images/placeholder.webp"
     },
     {
       "date": "2025",
       "title": "Community Activities",
-      "description": "Regular themed nights and workshops strengthen connections with students and local initiatives."
+      "description": "Regular themed nights and workshops strengthen connections with students and local initiatives.",
+      "image": "images/placeholder.webp"
     }
   ]
 }
-
