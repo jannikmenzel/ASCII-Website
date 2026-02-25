@@ -208,8 +208,6 @@ Das Projekt enthält mehrere Shortcodes unter `layouts/shortcodes/`. Hier eine k
     - `class`: Optional zusätzliche Tailwind-Klassen für den Wrapper.
   - Beispiel: `{{< carousel images="images/cafe.webp,images/getraenke.webp" autoplay="4" class="max-w-3xl mx-auto" >}}`
 
----
-
 ## Contribution
 
 Beiträge sind willkommen:
