@@ -9,12 +9,14 @@
     "scripts": {
         "start": "hugo server -D",
         "build": "hugo --minify",
-        "build:css": "NODE_ENV=production postcss assets/css/main.css -o resources/_gen/assets/css/main.css"
+        "build:css": "NODE_ENV=production postcss assets/css/main.css -o resources/_gen/assets/css/main.css",
+        "audit": "lighthouse http://localhost:1313 --chrome-flags='--headless --no-sandbox --disable-gpu' --output html --output-path ./report.html && open -a \"Firefox\" ./report.html"
     },
     "devDependencies": {
-        "tailwindcss": "^3.3.2",
+        "autoprefixer": "^10.4.14",
+        "lighthouse": "^13.0.3",
         "postcss": "^8.4.23",
         "postcss-cli": "^10.1.0",
-        "autoprefixer": "^10.4.14"
+        "tailwindcss": "^3.3.2"
     }
 }

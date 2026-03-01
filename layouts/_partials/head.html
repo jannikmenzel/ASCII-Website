@@ -10,9 +10,6 @@
 {{ if hugo.IsProduction }}
     {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
 {{ end }}
-
-<!-- Preload CSS -->
-<link rel="preload" href="{{ $styles.RelPermalink }}" as="style"{{ with $styles.Data.Integrity }} integrity="{{ . }}"{{ end }} crossorigin="anonymous">
 <link href="{{ $styles.RelPermalink }}" rel="stylesheet"{{ with $styles.Data.Integrity }} integrity="{{ . }}"{{ end }}
       crossorigin="anonymous"/>
 
