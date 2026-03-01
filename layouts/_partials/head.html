@@ -10,8 +10,21 @@
 {{ if hugo.IsProduction }}
     {{ $styles = $styles | minify | fingerprint | resources.PostProcess }}
 {{ end }}
+
+<!-- Preload CSS -->
+<link rel="preload" href="{{ $styles.RelPermalink }}" as="style"{{ with $styles.Data.Integrity }} integrity="{{ . }}"{{ end }} crossorigin="anonymous">
 <link href="{{ $styles.RelPermalink }}" rel="stylesheet"{{ with $styles.Data.Integrity }} integrity="{{ . }}"{{ end }}
       crossorigin="anonymous"/>
+
+<!-- Preload Fonts -->
+{{ $robotoRegular := resources.Get "fonts/Roboto-Regular.ttf" -}}
+{{ $bagelFatOne := resources.Get "fonts/BagelFatOne-Regular.ttf" -}}
+{{ if hugo.IsProduction -}}
+    {{ $robotoRegular = $robotoRegular | fingerprint -}}
+    {{ $bagelFatOne = $bagelFatOne | fingerprint -}}
+{{ end -}}
+<link rel="preload" href="{{ $robotoRegular.RelPermalink }}" as="font" type="font/ttf" crossorigin="anonymous">
+<link rel="preload" href="{{ $bagelFatOne.RelPermalink }}" as="font" type="font/ttf" crossorigin="anonymous">
 
 
 {{ partial "scripts.html" . }}
