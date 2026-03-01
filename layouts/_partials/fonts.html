@@ -1,0 +1,95 @@
+{{ $robotoRegular := resources.Get "fonts/Roboto-Regular.ttf" -}}
+{{ $robotoMedium := resources.Get "fonts/Roboto-Medium.ttf" -}}
+{{ $robotoLight := resources.Get "fonts/Roboto-Light.ttf" -}}
+{{ $bagelFatOne := resources.Get "fonts/BagelFatOne-Regular.ttf" -}}
+{{ $snigletRegular := resources.Get "fonts/Sniglet-Regular.ttf" -}}
+{{ $snigletExtraBold := resources.Get "fonts/Sniglet-ExtraBold.ttf" -}}
+{{ $interVariable := resources.Get "fonts/InterVariable.ttf" -}}
+{{ $interVariableItalic := resources.Get "fonts/InterVariable-Italic.ttf" -}}
+{{ $materialIcons := resources.Get "fonts/MaterialIcons-Regular.ttf" -}}
+
+{{ if hugo.IsProduction -}}
+    {{ $robotoRegular = $robotoRegular | minify | fingerprint -}}
+    {{ $robotoMedium = $robotoMedium | minify | fingerprint -}}
+    {{ $robotoLight = $robotoLight | minify | fingerprint -}}
+    {{ $bagelFatOne = $bagelFatOne | minify | fingerprint -}}
+    {{ $snigletRegular = $snigletRegular | minify | fingerprint -}}
+    {{ $snigletExtraBold = $snigletExtraBold | minify | fingerprint -}}
+    {{ $interVariable = $interVariable | minify | fingerprint -}}
+    {{ $interVariableItalic = $interVariableItalic | minify | fingerprint -}}
+    {{ $materialIcons = $materialIcons | minify | fingerprint -}}
+{{ end -}}
+
+<style>
+@font-face {
+    font-family: 'Bagel Fat One';
+    src: url('{{ $bagelFatOne.RelPermalink }}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sniglet';
+    src: url('{{ $snigletRegular.RelPermalink }}') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Sniglet';
+    src: url('{{ $snigletExtraBold.RelPermalink }}') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('{{ $robotoRegular.RelPermalink }}') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('{{ $robotoMedium.RelPermalink }}') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('{{ $robotoLight.RelPermalink }}') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('{{ $interVariable.RelPermalink }}') format('truetype');
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    src: url('{{ $interVariableItalic.RelPermalink }}') format('truetype');
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Material Icons';
+    src: url('{{ $materialIcons.RelPermalink }}') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: block;
+}
+</style>

@@ -2,6 +2,8 @@
 <meta name="viewport" content="width=device-width">
 <link rel="icon" href="{{ "favicon.ico" | relURL }}" type="image/x-icon">
 
+{{ partial "fonts.html" . }}
+
 {{ $options := dict "inlineImports" true }}
 {{ $styles := resources.Get "css/main.css" }}
 {{ $styles = $styles | css.PostCSS $options }}
@@ -11,16 +13,6 @@
 <link href="{{ $styles.RelPermalink }}" rel="stylesheet"{{ with $styles.Data.Integrity }} integrity="{{ . }}"{{ end }}
       crossorigin="anonymous"/>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Sniglet:wght@400;800&display=swap" rel="stylesheet">
-<link rel="preload" as="style" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" media="print"
-      onload="this.media='all'">
-<noscript>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-</noscript>
 
 {{ partial "scripts.html" . }}
 {{ partial "seo.html" . }}
