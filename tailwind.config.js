@@ -1,5 +1,10 @@
 module.exports = {
-    content: ['./hugo_stats.json', './layouts/**/*.html', './content/**/*.{md,html}', './assets/**/*.{js,css}'],
+    content: [
+        './hugo_stats.json',
+        './layouts/**/*.html',
+        './content/**/*.{md,html}',
+        './assets/**/*.{js,css}'
+    ],
     // Safelist für per JavaScript hinzugefügte Klassen
     safelist: [
         'text-green-500',

@@ -8,12 +8,14 @@
     },
     "scripts": {
         "start": "hugo server -D",
-        "build": "hugo --minify",
-        "build:css": "NODE_ENV=production postcss assets/css/main.css -o resources/_gen/assets/css/main.css",
+        "build": "HUGO_ENVIRONMENT=production hugo --minify",
+        "build:css": "HUGO_ENVIRONMENT=production NODE_ENV=production postcss assets/css/main.css -o resources/_gen/assets/css/main.css",
+        "build:prod": "npm run build:css && npm run build",
         "audit": "lighthouse http://localhost:1313 --chrome-flags='--headless --no-sandbox --disable-gpu' --output html --output-path ./report.html && open -a \"Firefox\" ./report.html"
     },
     "devDependencies": {
         "autoprefixer": "^10.4.14",
+        "cssnano": "^7.1.2",
         "lighthouse": "^13.0.3",
         "postcss": "^8.4.23",
         "postcss-cli": "^10.1.0",

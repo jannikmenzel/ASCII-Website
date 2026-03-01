@@ -18,6 +18,11 @@ weight = 1
 languageName = "English"
 weight = 2
 
+[minify]
+fingerprint = true
+disableXML = false
+minifyOutput = true
+
 [module]
 [module.hugoVersion]
 extended = false

@@ -1,24 +1,26 @@
 <!-- Localization Auto Redirect -->
 {{ if .IsHome }}
     <script>
-        const cachedLang = localStorage.getItem("language");
-        const path = globalThis.location.pathname;
+        (function () {
+            const cachedLang = localStorage.getItem("language");
+            const path = globalThis.location.pathname;
 
-        if (cachedLang) {
-            if (cachedLang === "de" && path !== "/") {
-                globalThis.location.href = "/";
-            } else if (cachedLang === "en" && path !== "/en/") {
-                globalThis.location.href = "/en/";
-            }
-        } else {
-            const lang = navigator.language;
-
-            if (lang.startsWith("de")) {
-                localStorage.setItem("language", "de");
+            if (cachedLang) {
+                if (cachedLang === "de" && path !== "/") {
+                    globalThis.location.href = "/";
+                } else if (cachedLang === "en" && path !== "/en/") {
+                    globalThis.location.href = "/en/";
+                }
             } else {
-                localStorage.setItem("language", "en");
+                const lang = navigator.language;
+
+                if (lang.startsWith("de")) {
+                    localStorage.setItem("language", "de");
+                } else {
+                    localStorage.setItem("language", "en");
+                }
             }
-        }
+        })();
     </script>
 {{ end }}
 
