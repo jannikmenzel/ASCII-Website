@@ -9,15 +9,15 @@
 {{ $materialIcons := resources.Get "fonts/MaterialIcons-Regular.ttf" -}}
 
 {{ if hugo.IsProduction -}}
-    {{ $robotoRegular = $robotoRegular | minify | fingerprint -}}
-    {{ $robotoMedium = $robotoMedium | minify | fingerprint -}}
-    {{ $robotoLight = $robotoLight | minify | fingerprint -}}
-    {{ $bagelFatOne = $bagelFatOne | minify | fingerprint -}}
-    {{ $snigletRegular = $snigletRegular | minify | fingerprint -}}
-    {{ $snigletExtraBold = $snigletExtraBold | minify | fingerprint -}}
-    {{ $interVariable = $interVariable | minify | fingerprint -}}
-    {{ $interVariableItalic = $interVariableItalic | minify | fingerprint -}}
-    {{ $materialIcons = $materialIcons | minify | fingerprint -}}
+    {{ $robotoRegular = $robotoRegular | fingerprint -}}
+    {{ $robotoMedium = $robotoMedium | fingerprint -}}
+    {{ $robotoLight = $robotoLight | fingerprint -}}
+    {{ $bagelFatOne = $bagelFatOne | fingerprint -}}
+    {{ $snigletRegular = $snigletRegular | fingerprint -}}
+    {{ $snigletExtraBold = $snigletExtraBold | fingerprint -}}
+    {{ $interVariable = $interVariable | fingerprint -}}
+    {{ $interVariableItalic = $interVariableItalic | fingerprint -}}
+    {{ $materialIcons = $materialIcons | fingerprint -}}
 {{ end -}}
 
 <style>
